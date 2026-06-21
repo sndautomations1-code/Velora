@@ -75,7 +75,7 @@ function Navbar() {
             ))}
           </div>
 
-          <a href="#contact" className="hidden lg:inline-block btn-solid-charcoal shrink-0">
+          <a href="#contact" className="hidden lg:inline-block btn-gold-cta shrink-0">
             Book Now
           </a>
 
@@ -111,7 +111,7 @@ function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="btn-solid-charcoal text-center mt-2"
+                className="btn-gold-cta text-center mt-2"
               >
                 Book Now
               </a>
