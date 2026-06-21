@@ -15,10 +15,12 @@ const staggerContainer = {
 
 function GoldDivider() {
   return (
-    <div className="divider-gold">
-      <span className="divider-line" />
-      <span className="text-lg">•</span>
-      <span className="divider-line" />
+    <div className="flex items-center justify-center gap-2.5 mx-auto" aria-hidden="true">
+      <span className="block h-px w-10 bg-gradient-to-r from-transparent to-gold/60" />
+      <span className="block w-1.5 h-1.5 rotate-45 bg-gold-gradient" />
+      <span className="block h-[3px] w-16 rounded-full bg-gold-gradient" />
+      <span className="block w-1.5 h-1.5 rotate-45 bg-gold-gradient" />
+      <span className="block h-px w-10 bg-gradient-to-l from-transparent to-gold/60" />
     </div>
   );
 }
@@ -542,10 +544,11 @@ function About() {
           className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20"
         >
           <div className="relative">
-            <div className="frame-gold p-2 rounded-none inline-block">
+            <div className="border border-gold/40 p-2 bg-off-white shadow-luxury inline-block">
               <img
-                src="https://images.pexels.com/photos/3757915/pexels-photo-3757915.jpeg?auto=compress&cs=tinysrgb&w=800&q=80"
-                alt="Velora clinic interior"
+                src="https://images.pexels.com/photos/16151060/pexels-photo-16151060.jpeg?auto=compress&cs=tinysrgb&w=900&q=80"
+                alt="Velora's serene, warmly lit aesthetic treatment room with modern premium interior"
+                loading="lazy"
                 className="w-full h-80 md:h-96 object-cover"
               />
             </div>
