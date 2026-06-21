@@ -42,6 +42,12 @@ function Navbar() {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const linkColorClass = isScrolled
+    ? 'text-charcoal/80 hover:text-charcoal'
+    : 'text-white hover:text-gold-light hero-text-shadow';
+
+  const logoColorClass = isScrolled ? 'text-charcoal' : 'text-white hero-text-shadow';
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -49,29 +55,33 @@ function Navbar() {
       }`}
     >
       <div className="container-padding max-w-7xl mx-auto">
-        <div className="flex items-center justify-between h-20">
-          <a href="#home" className="font-serif text-xl tracking-wide text-charcoal">
-            <span className="text-gold-deep">&#10038;</span> Velora
+        <div className="flex items-center justify-between h-20 md:h-24">
+          <a
+            href="#home"
+            className={`flex items-center gap-2 font-serif text-2xl md:text-3xl tracking-wide transition-colors ${logoColorClass}`}
+          >
+            <span className="text-gold-deep text-3xl md:text-4xl">&#10038;</span> Velora
           </a>
 
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center flex-1 justify-evenly mx-10">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm tracking-wide text-charcoal/80 hover:text-charcoal transition-colors"
+                className={`text-sm tracking-wide transition-colors ${linkColorClass}`}
               >
                 {link.name}
               </a>
             ))}
-            <a href="#contact" className="btn-solid-charcoal">
-              Book Now
-            </a>
           </div>
+
+          <a href="#contact" className="hidden lg:inline-block btn-solid-charcoal shrink-0">
+            Book Now
+          </a>
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-charcoal"
+            className={`lg:hidden p-2 transition-colors ${isScrolled ? 'text-charcoal' : 'text-white hero-text-shadow'}`}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
