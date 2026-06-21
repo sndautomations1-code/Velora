@@ -132,7 +132,7 @@ function Hero() {
           alt="Luxury spa treatment room"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-cream" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.15)_15%,rgba(0,0,0,0)_35%,rgba(0,0,0,0)_80%,#faf8f3_100%)]" />
       </div>
 
       <div className="relative z-10 text-center container-padding max-w-4xl mx-auto px-6">
