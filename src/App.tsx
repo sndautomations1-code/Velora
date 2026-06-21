@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck, Check } from 'lucide-react';
 import heroImage from './assets/hero.png';
 
 const fadeInUp = {
@@ -178,6 +178,8 @@ type Service = {
   price: string;
   image: string;
   alt: string;
+  highlights?: string[];
+  bestFor?: string;
 };
 
 const services: Service[] = [
@@ -190,6 +192,13 @@ const services: Service[] = [
     price: 'From $250',
     image: 'https://images.pexels.com/photos/37229301/pexels-photo-37229301.jpeg?auto=compress&cs=tinysrgb&w=1000&q=80',
     alt: 'Woman receiving a soothing luxury facial treatment at the spa',
+    highlights: [
+      'Deep cleansing & gentle exfoliation',
+      'Customized serum infusion',
+      'Relaxing facial & lymphatic massage',
+      'Luminous, deeply hydrated finish',
+    ],
+    bestFor: 'Dull, dehydrated, or stressed skin',
   },
   {
     num: '02',
@@ -284,14 +293,37 @@ function FeaturedServiceCard({ service }: { service: typeof services[0] }) {
           <span className="h-px flex-1 bg-gold-gradient" />
         </div>
         <h3 className="font-serif text-3xl md:text-4xl text-charcoal mb-4">{service.title}</h3>
-        <p className="text-stone font-light leading-relaxed mb-8 max-w-md">{service.desc}</p>
-        <div className="flex items-center gap-6 text-sm mb-8">
+        <p className="text-stone font-light leading-relaxed mb-6 max-w-md">{service.desc}</p>
+        <div className="flex items-center gap-6 text-sm mb-6">
           <span className="inline-flex items-center gap-2 text-stone">
             <Clock size={16} className="text-gold" /> {service.duration}
           </span>
           <span className="w-px h-4 bg-gold/40" />
           <span className="font-medium text-charcoal">{service.price}</span>
         </div>
+
+        {service.highlights && (
+          <div className="border-t border-gold/25 pt-6 mb-6">
+            <p className="section-eyebrow mb-4">Treatment Highlights</p>
+            <ul className="space-y-2.5 max-w-md">
+              {service.highlights.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm text-charcoal/80">
+                  <Check size={16} strokeWidth={2.5} className="text-gold mt-0.5 shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {service.bestFor && (
+          <p className="text-sm text-stone mb-8">
+            <span className="gold-gradient-text font-medium uppercase tracking-wide text-xs">Best for</span>
+            <span className="mx-2 text-gold/50">—</span>
+            {service.bestFor}
+          </p>
+        )}
+
         <BookLink label="Book This Treatment" />
       </div>
     </motion.div>
