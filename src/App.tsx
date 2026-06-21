@@ -1,0 +1,876 @@
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star } from 'lucide-react';
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: 'easeOut' },
+};
+
+const staggerContainer = {
+  animate: { transition: { staggerChildren: 0.1 } },
+};
+
+function GoldDivider() {
+  return (
+    <div className="divider-gold">
+      <span className="divider-line" />
+      <span className="text-lg">•</span>
+      <span className="divider-line" />
+    </div>
+  );
+}
+
+function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'Services', href: '#services' },
+    { name: 'About', href: '#about' },
+    { name: 'Process', href: '#process' },
+    { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'glass-effect shadow-luxury' : 'bg-transparent'
+      }`}
+    >
+      <div className="container-padding max-w-7xl mx-auto">
+        <div className="flex items-center justify-between h-20">
+          <a href="#home" className="font-serif text-xl tracking-wide text-charcoal">
+            <span className="text-gold-deep">&#10038;</span> Velora
+          </a>
+
+          <div className="hidden lg:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-sm tracking-wide text-charcoal/80 hover:text-charcoal transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+            <a href="#contact" className="btn-solid-charcoal">
+              Book Now
+            </a>
+          </div>
+
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-charcoal"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden glass-effect border-t border-gold-deep/10"
+          >
+            <div className="container-padding py-6 flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-sm tracking-wide text-charcoal/80 hover:text-charcoal py-2"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <a
+                href="#contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="btn-solid-charcoal text-center mt-2"
+              >
+                Book Now
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}
+
+function Hero() {
+  return (
+    <section id="home" className="relative min-h-screen flex items-center justify-center">
+      <div className="absolute inset-0">
+        <img
+          src="https://images.pexels.com/photos/3757953/pexels-photo-3757953.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+          alt="Luxury spa treatment room"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-cream" />
+      </div>
+
+      <div className="relative z-10 text-center container-padding max-w-4xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <span className="text-gold-light text-2xl">&#10038;</span>
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-off-white mt-4 mb-6 font-light">
+            Beauty, <em className="italic">Elevated</em>
+          </h1>
+          <GoldDivider />
+          <p className="text-lg md:text-xl text-off-white/90 mt-6 mb-10 font-light tracking-wide">
+            Where medical precision meets aesthetic artistry
+          </p>
+          <a href="#services" className="btn-outline-gold inline-block border-off-white/50 text-off-white hover:bg-gold-deep hover:text-off-white hover:border-gold-deep">
+            Explore Treatments
+          </a>
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gold-light/60 animate-bounce">
+        <div className="w-px h-12 bg-gold-deep/40 mx-auto" />
+      </div>
+    </section>
+  );
+}
+
+const services = [
+  {
+    title: 'Botox',
+    desc: 'Smooth fine lines and wrinkles with precision-administered neurotoxin treatments for a refreshed, youthful appearance.',
+    duration: '30 min',
+    price: 'From $350',
+    image: 'https://images.pexels.com/photos/3757947/pexels-photo-3757947.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+  },
+  {
+    title: 'Dermal Fillers',
+    desc: 'Restore volume and contour with premium hyaluronic acid fillers for natural-looking enhancement.',
+    duration: '45 min',
+    price: 'From $600',
+    image: 'https://images.pexels.com/photos/3997991/pexels-photo-3997991.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+  },
+  {
+    title: 'Microneedling',
+    desc: 'Stimulate collagen production with advanced microneedling for smoother, firmer skin texture.',
+    duration: '60 min',
+    price: 'From $400',
+    image: 'https://images.pexels.com/photos/3899577/pexels-photo-3899577.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+  },
+  {
+    title: 'Laser Resurfacing',
+    desc: 'Rejuvenate your skin with state-of-the-art fractional laser technology for dramatic results.',
+    duration: '90 min',
+    price: 'From $800',
+    image: 'https://images.pexels.com/photos/7754951/pexels-photo-7754951.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+  },
+  {
+    title: 'Signature Facial',
+    desc: 'Our bespoke facial treatment combining deep cleansing, extractions, and nourishing serums.',
+    duration: '75 min',
+    price: 'From $250',
+    image: 'https://images.pexels.com/photos/3757168/pexels-photo-3757168.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+  },
+  {
+    title: 'Skin Rejuvenation',
+    desc: 'Advanced IPL and LED therapies to target pigmentation, redness, and overall skin vitality.',
+    duration: '60 min',
+    price: 'From $300',
+    image: 'https://images.pexels.com/photos/3757943/pexels-photo-3757943.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+  },
+];
+
+function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="card-luxury group"
+    >
+      <div className="relative overflow-hidden">
+        <img
+          src={service.image}
+          alt={service.title}
+          className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <span className="absolute top-4 right-4 text-gold-deep/80 text-sm">&#10038;</span>
+      </div>
+      <div className="p-6">
+        <h3 className="font-serif text-2xl text-charcoal mb-3">{service.title}</h3>
+        <p className="text-stone font-light text-sm leading-relaxed mb-4">{service.desc}</p>
+        <div className="divider-line mb-4" />
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-stone">{service.duration}</span>
+          <span className="font-medium text-charcoal">{service.price}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function Services() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <section id="services" className="section-padding bg-cream">
+      <div className="max-w-7xl mx-auto container-padding">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="text-gold-deep text-xl">&#10038;</span>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
+            Our <em className="italic">Treatments</em>
+          </h2>
+          <GoldDivider />
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <ServiceCard key={service.title} service={service} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const team = [
+  {
+    name: 'Dr. Sophia Chen',
+    title: 'Medical Director',
+    bio: 'Board-certified dermatologist with over 15 years specializing in aesthetic medicine.',
+    image: 'https://images.pexels.com/photos/5452292/pexels-photo-5452292.jpeg?auto=compress&cs=tinysrgb&w=400&q=80',
+  },
+  {
+    name: 'Marissa Delacroix',
+    title: 'Lead Aesthetician',
+    bio: 'Master aesthetician certified in advanced laser therapies and skin rejuvenation.',
+    image: 'https://images.pexels.com/photos/5672401/pexels-photo-5672401.jpeg?auto=compress&cs=tinysrgb&w=400&q=80',
+  },
+  {
+    name: 'Dr. James Morrison',
+    title: 'Injection Specialist',
+    bio: 'Expert injector specializing in facial anatomy and natural-looking enhancements.',
+    image: 'https://images.pexels.com/photos/4173285/pexels-photo-4173285.jpeg?auto=compress&cs=tinysrgb&w=400&q=80',
+  },
+];
+
+function About() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <section id="about" className="section-padding bg-off-white">
+      <div className="max-w-7xl mx-auto container-padding">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="text-gold-deep text-xl">&#10038;</span>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
+            About <em className="italic">Velora</em>
+          </h2>
+          <GoldDivider />
+        </motion.div>
+
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8 }}
+          className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20"
+        >
+          <div className="relative">
+            <div className="frame-gold p-2 rounded-none inline-block">
+              <img
+                src="https://images.pexels.com/photos/3757915/pexels-photo-3757915.jpeg?auto=compress&cs=tinysrgb&w=800&q=80"
+                alt="Velora clinic interior"
+                className="w-full h-80 md:h-96 object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-6 md:-right-10 bg-charcoal text-off-white py-4 px-6 rounded-sm shadow-luxury">
+              <span className="block text-2xl font-serif text-gold-light">Est.</span>
+              <span className="text-3xl font-serif">2019</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-serif text-3xl text-charcoal mb-6 font-light">
+              Where Science Meets <em className="italic">Beauty</em>
+            </h3>
+            <p className="text-stone leading-relaxed mb-6">
+              Founded in 2019, Velora emerged from a vision to create a sanctuary where advanced medical aesthetics
+              blend seamlessly with the tranquility of a luxury spa. Our founders, recognizing the gap between
+              clinical effectiveness and spa-like comfort, established Velora to offer both.
+            </p>
+            <p className="text-stone leading-relaxed mb-6">
+              Today, we stand as a beacon of excellence in aesthetic medicine, having transformed thousands of
+              lives through our personalized approach to beauty. Every treatment is a collaboration between our
+              experts and you, ensuring results that enhance rather than alter your natural beauty.
+            </p>
+            <p className="text-stone leading-relaxed">
+              Our commitment to safety, artistry, and individualized care has made us the trusted choice for
+              discerning clients seeking the highest standard in aesthetic treatments.
+            </p>
+          </div>
+        </motion.div>
+
+        <div className="mt-24">
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="font-serif text-2xl text-charcoal mb-12 text-center font-light"
+          >
+            Meet <em className="italic">Our Team</em>
+          </motion.h3>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {team.map((member, index) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                className="card-luxury text-center p-6"
+              >
+                <div className="w-32 h-32 mx-auto mb-5 rounded-full overflow-hidden border-2 border-gold-deep/30">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h4 className="font-serif text-xl text-charcoal mb-1">{member.name}</h4>
+                <p className="text-gold-deep text-sm tracking-wide uppercase mb-3">{member.title}</p>
+                <p className="text-stone text-sm leading-relaxed">{member.bio}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const steps = [
+  {
+    num: '01',
+    title: 'Consultation',
+    desc: 'Begin with a comprehensive assessment where we discuss your goals, analyze your skin, and create a personalized treatment roadmap.',
+    icon: 'S',
+  },
+  {
+    num: '02',
+    title: 'Custom Plan',
+    desc: 'Receive a tailored treatment plan designed specifically for your unique needs, timeline, and desired outcomes.',
+    icon: 'P',
+  },
+  {
+    num: '03',
+    title: 'Treatment',
+    desc: 'Experience your treatment in our serene, state-of-the-art facility administered by our expert practitioners.',
+    icon: 'T',
+  },
+  {
+    num: '04',
+    title: 'Aftercare',
+    desc: 'Enjoy dedicated follow-up care with personalized instructions and ongoing support for optimal, lasting results.',
+    icon: 'A',
+  },
+];
+
+function Process() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <section id="process" className="section-padding bg-cream relative overflow-hidden">
+      <div className="max-w-7xl mx-auto container-padding">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="text-gold-deep text-xl">&#10038;</span>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
+            Your <em className="italic">Journey</em>
+          </h2>
+          <GoldDivider />
+        </motion.div>
+
+        <div ref={ref} className="relative">
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-gold-deep/30 -translate-y-1/2" />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 relative z-10">
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="text-center"
+              >
+                <div className="relative inline-block mb-6">
+                  <span className="font-serif text-7xl text-gold-deep/20 absolute -top-2 -left-4">
+                    {step.num}
+                  </span>
+                  <div className="w-20 h-20 rounded-full border border-gold-deep/40 flex items-center justify-center bg-cream relative z-10">
+                    <span className="text-gold-deep text-2xl font-serif">{step.icon}</span>
+                  </div>
+                </div>
+                <h3 className="font-serif text-xl text-charcoal mb-3">{step.title}</h3>
+                <p className="text-stone text-sm leading-relaxed">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const testimonials = [
+  {
+    name: 'Alexandra M.',
+    detail: 'Botox & Fillers',
+    quote: "Velora has transformed my entire approach to skincare. Dr. Chen's expertise is unmatched, and the results speak for themselves. I've never felt more confident.",
+    stars: 5,
+  },
+  {
+    name: 'Rebecca T.',
+    detail: 'Microneedling',
+    quote: "After years of struggling with acne scars, the microneedling treatments at Velora have given me skin I finally love. The team's care and professionalism made all the difference.",
+    stars: 5,
+  },
+  {
+    name: 'Jennifer L.',
+    detail: 'Signature Facial',
+    quote: "Every visit to Velora feels like a true retreat. The Signature Facial is heavenly, and I always leave with a radiant glow. Simply the best spa experience I've ever had.",
+    stars: 5,
+  },
+  {
+    name: 'Megan K.',
+    detail: 'Laser Resurfacing',
+    quote: "The laser treatment results exceeded all my expectations. Dr. Morrison explained everything thoroughly and the aftercare was exceptional. My skin has never looked better.",
+    stars: 5,
+  },
+];
+
+function Testimonials() {
+  const [current, setCurrent] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const next = () => setCurrent((p) => (p + 1) % testimonials.length);
+  const prev = () => setCurrent((p) => (p - 1 + testimonials.length) % testimonials.length);
+
+  useEffect(() => {
+    const interval = setInterval(next, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section id="testimonials" className="section-padding bg-off-white">
+      <div className="max-w-4xl mx-auto container-padding">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="text-gold-deep text-xl">&#10038;</span>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
+            Client <em className="italic">Stories</em>
+          </h2>
+          <GoldDivider />
+        </motion.div>
+
+        <div ref={ref} className="relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4 }}
+              className="card-luxury p-8 md:p-12 text-center relative"
+            >
+              <div className="decorative-corner top-4 left-4" />
+              <div className="decorative-corner-tr top-4 right-4" />
+              <div className="decorative-corner-bl bottom-4 left-4" />
+              <div className="decorative-corner-br bottom-4 right-4" />
+
+              <div className="flex justify-center gap-1 mb-6">
+                {Array.from({ length: testimonials[current].stars }).map((_, i) => (
+                  <Star key={i} size={18} className="text-gold-deep fill-gold-deep" />
+                ))}
+              </div>
+
+              <blockquote className="font-serif text-xl md:text-2xl text-charcoal italic leading-relaxed mb-8">
+                "{testimonials[current].quote}"
+              </blockquote>
+
+              <div className="divider-line mb-6 w-16 mx-auto" />
+
+              <p className="text-charcoal font-medium">{testimonials[current].name}</p>
+              <p className="text-gold-deep text-sm tracking-wide">{testimonials[current].detail}</p>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="flex justify-center gap-4 mt-8">
+            <button
+              onClick={prev}
+              className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-deep hover:bg-gold-deep hover:text-off-white transition-colors"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={next}
+              className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-deep hover:bg-gold-deep hover:text-off-white transition-colors"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div className="flex justify-center gap-2 mt-6">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  i === current ? 'bg-gold-deep w-8' : 'bg-gold-deep/30'
+                }`}
+                aria-label={`Go to testimonial ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    treatment: '',
+    date: '',
+    time: '',
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({ name: '', phone: '', treatment: '', date: '', time: '' });
+    }, 3000);
+  };
+
+  return (
+    <section id="contact" className="section-padding bg-cream">
+      <div className="max-w-7xl mx-auto container-padding">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="text-gold-deep text-xl">&#10038;</span>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
+            Book Your <em className="italic">Visit</em>
+          </h2>
+          <GoldDivider />
+        </motion.div>
+
+        <div ref={ref} className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="card-luxury p-8 md:p-10 relative">
+              <div className="decorative-corner top-4 left-4" />
+              <div className="decorative-corner-tr top-4 right-4" />
+              <div className="decorative-corner-bl bottom-4 left-4" />
+              <div className="decorative-corner-br bottom-4 right-4" />
+
+              <h3 className="font-serif text-2xl text-charcoal mb-6">Request an Appointment</h3>
+
+              {isSubmitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-12"
+                >
+                  <span className="text-gold-deep text-4xl block mb-4">&#10038;</span>
+                  <p className="font-serif text-xl text-charcoal">Thank you!</p>
+                  <p className="text-stone mt-2">We'll contact you shortly to confirm.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label htmlFor="name" className="block text-sm text-charcoal mb-2">Full Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm text-charcoal mb-2">Phone Number</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="treatment" className="block text-sm text-charcoal mb-2">Treatment</label>
+                    <select
+                      id="treatment"
+                      required
+                      value={formData.treatment}
+                      onChange={(e) => setFormData({ ...formData, treatment: e.target.value })}
+                      className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                    >
+                      <option value="">Select a treatment</option>
+                      {services.map((s) => (
+                        <option key={s.title} value={s.title}>{s.title}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="date" className="block text-sm text-charcoal mb-2">Preferred Date</label>
+                      <input
+                        type="date"
+                        id="date"
+                        required
+                        value={formData.date}
+                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                        className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="time" className="block text-sm text-charcoal mb-2">Preferred Time</label>
+                      <select
+                        id="time"
+                        required
+                        value={formData.time}
+                        onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                        className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                      >
+                        <option value="">Select time</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">1:00 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" className="btn-solid-charcoal w-full mt-4">
+                    Request Appointment
+                  </button>
+                </form>
+              )}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col justify-center"
+          >
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                  <MapPin size={24} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h4 className="text-charcoal font-medium mb-1">Visit Us</h4>
+                  <p className="text-stone">428 Madison Avenue, Suite 1200</p>
+                  <p className="text-stone">New York, NY 10022</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                  <Phone size={24} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h4 className="text-charcoal font-medium mb-1">Call Us</h4>
+                  <p className="text-stone">(212) 555-0147</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                  <Mail size={24} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h4 className="text-charcoal font-medium mb-1">Email Us</h4>
+                  <p className="text-stone">hello@velora-nyc.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                  <Clock size={24} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h4 className="text-charcoal font-medium mb-1">Hours</h4>
+                  <p className="text-stone">Monday – Friday: 9am – 7pm</p>
+                  <p className="text-stone">Saturday: 10am – 5pm</p>
+                  <p className="text-stone">Sunday: Closed</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="bg-charcoal py-16">
+      <div className="max-w-7xl mx-auto container-padding">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          <div>
+            <a href="#home" className="font-serif text-xl text-off-white inline-flex items-center gap-2">
+              <span className="text-gold-light">&#10038;</span> Velora
+            </a>
+            <p className="text-stone mt-4 text-sm leading-relaxed">
+              Where medical precision meets aesthetic artistry. Transforming beauty with science and care since 2019.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-off-white font-medium mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              {['Services', 'About', 'Process', 'Testimonials', 'Contact'].map((link) => (
+                <li key={link}>
+                  <a
+                    href={`#${link.toLowerCase()}`}
+                    className="text-stone text-sm hover:text-gold-light transition-colors"
+                  >
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-off-white font-medium mb-4">Treatments</h4>
+            <ul className="space-y-2">
+              {['Botox', 'Dermal Fillers', 'Microneedling', 'Laser Resurfacing', 'Signature Facial'].map((t) => (
+                <li key={t}>
+                  <a href="#services" className="text-stone text-sm hover:text-gold-light transition-colors">
+                    {t}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-off-white font-medium mb-4">Connect</h4>
+            <div className="flex gap-4">
+              <a href="#" className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-light hover:bg-gold-deep hover:text-charcoal transition-colors" aria-label="Instagram">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <a href="#" className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-light hover:bg-gold-deep hover:text-charcoal transition-colors" aria-label="Facebook">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="#" className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-light hover:bg-gold-deep hover:text-charcoal transition-colors" aria-label="LinkedIn">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-stone/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-stone text-sm">
+            &copy; 2024 Velora Medical Aesthetics. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm text-stone">
+            <a href="#" className="hover:text-gold-light transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-gold-light transition-colors">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="min-h-screen">
+      <Navbar />
+      <Hero />
+      <Services />
+      <About />
+      <Process />
+      <Testimonials />
+      <Contact />
+      <Footer />
+    </div>
+  );
+}
