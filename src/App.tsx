@@ -178,6 +178,7 @@ type Service = {
   price: string;
   image: string;
   alt: string;
+  cta: string;
   highlights?: string[];
   bestFor?: string;
   benefits?: string[];
@@ -193,6 +194,7 @@ const services: Service[] = [
     price: 'From $250',
     image: 'https://images.pexels.com/photos/37229301/pexels-photo-37229301.jpeg?auto=compress&cs=tinysrgb&w=1000&q=80',
     alt: 'Woman receiving a soothing luxury facial treatment at the spa',
+    cta: 'Reserve This Ritual',
     highlights: [
       'Deep cleansing & gentle exfoliation',
       'Customized serum infusion',
@@ -210,6 +212,7 @@ const services: Service[] = [
     price: 'From $350',
     image: 'https://images.pexels.com/photos/7581590/pexels-photo-7581590.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
     alt: 'Close-up of a cosmetic forehead injection procedure',
+    cta: 'Reserve Your Session',
   },
   {
     num: '03',
@@ -219,6 +222,7 @@ const services: Service[] = [
     price: 'From $600',
     image: 'https://images.pexels.com/photos/7446681/pexels-photo-7446681.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
     alt: 'Aesthetician performing a lip filler treatment on a relaxed client',
+    cta: 'Book Appointment',
   },
   {
     num: '04',
@@ -228,6 +232,7 @@ const services: Service[] = [
     price: 'From $400',
     image: 'https://images.pexels.com/photos/29648626/pexels-photo-29648626.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
     alt: 'Woman receiving a professional microneedling facial treatment',
+    cta: 'Schedule Now',
   },
   {
     num: '05',
@@ -237,6 +242,7 @@ const services: Service[] = [
     price: 'From $800',
     image: 'https://images.pexels.com/photos/3985356/pexels-photo-3985356.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     alt: 'Cosmetologist performing a laser resurfacing treatment on a client wearing safety glasses',
+    cta: 'Book Consultation',
   },
   {
     num: '06',
@@ -246,6 +252,7 @@ const services: Service[] = [
     price: 'From $300',
     image: 'https://images.pexels.com/photos/3762756/pexels-photo-3762756.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     alt: 'Woman with radiant, glowing rejuvenated skin',
+    cta: 'Begin Your Journey',
   },
 ];
 
@@ -346,7 +353,7 @@ function FeaturedServiceCard({ service }: { service: typeof services[0] }) {
         </div>
 
         <div className="border-t border-gold/25 pt-6">
-          <BookLink label="Book This Treatment" />
+          <BookLink label={service.cta} />
         </div>
       </div>
     </motion.div>
@@ -394,7 +401,7 @@ function ServiceCard({ service, index, wide = false }: { service: typeof service
           </span>
           <span className="font-medium text-charcoal">{service.price}</span>
         </div>
-        <BookLink />
+        <BookLink label={service.cta} />
       </div>
     </motion.div>
   );
