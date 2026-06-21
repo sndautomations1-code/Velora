@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck } from 'lucide-react';
 import heroImage from './assets/hero.png';
 
 const fadeInUp = {
@@ -345,6 +345,13 @@ function ServiceCard({ service, index, wide = false }: { service: typeof service
   );
 }
 
+const trustStats = [
+  { icon: Sparkles, primary: '6 Treatments', caption: 'Signature & curated' },
+  { icon: Award, primary: 'Board-Certified', caption: 'Expert specialists' },
+  { icon: ShieldCheck, primary: 'FDA-Approved', caption: 'Medical technology' },
+  { icon: UserCheck, primary: 'Personalized', caption: 'Bespoke plans' },
+];
+
 function Services() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -362,7 +369,7 @@ function Services() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
-          className="text-center mb-16 md:mb-20"
+          className="text-center mb-12 md:mb-14"
         >
           <span className="gold-gradient-text text-xl">&#10038;</span>
           <p className="section-eyebrow mt-3">What We Offer</p>
@@ -370,9 +377,37 @@ function Services() {
             Our <em className="italic gold-gradient-text">Treatments</em>
           </h2>
           <GoldDivider />
-          <p className="text-stone font-light max-w-xl mx-auto mt-6">
-            A curated collection of medical-grade aesthetics, each tailored to your unique features and performed by board-certified specialists using the latest technology.
+          <p className="text-stone font-light leading-relaxed max-w-2xl mx-auto mt-6">
+            At Velora, every treatment begins with intention. Our specialists pair medical precision
+            with an artist's eye — designing each protocol around your unique anatomy, goals, and skin.
+            The result is refined, natural, and unmistakably you.
           </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : 0.2 }}
+          className="max-w-4xl mx-auto mb-16 md:mb-20 border-y border-gold/25 py-8"
+        >
+          <div className="flex flex-wrap items-center justify-center gap-y-8">
+            {trustStats.map((stat, i) => (
+              <Fragment key={stat.primary}>
+                <div className="flex flex-col items-center text-center gap-2 px-6 sm:px-8 basis-1/2 sm:basis-0 sm:flex-1">
+                  <stat.icon size={24} strokeWidth={1.5} className="text-gold" />
+                  <span className="font-serif text-lg md:text-xl text-charcoal leading-tight">
+                    {stat.primary}
+                  </span>
+                  <span className="text-[11px] uppercase tracking-ultrawide text-stone">
+                    {stat.caption}
+                  </span>
+                </div>
+                {i < trustStats.length - 1 && (
+                  <span className="hidden sm:block w-px h-12 bg-gold/30" aria-hidden="true" />
+                )}
+              </Fragment>
+            ))}
+          </div>
         </motion.div>
 
         <div className="space-y-8 lg:space-y-10">
