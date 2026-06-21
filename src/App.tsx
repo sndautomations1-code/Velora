@@ -575,19 +575,13 @@ function About() {
           transition={{ duration: 0.8 }}
           className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20"
         >
-          <div className="relative">
-            <div className="border border-gold/40 p-2 bg-off-white shadow-luxury inline-block">
-              <img
-                src="https://images.pexels.com/photos/16151060/pexels-photo-16151060.jpeg?auto=compress&cs=tinysrgb&w=900&q=80"
-                alt="Velora's serene, warmly lit aesthetic treatment room with modern premium interior"
-                loading="lazy"
-                className="w-full h-80 md:h-96 object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-6 -right-6 md:-right-10 bg-charcoal text-off-white py-4 px-6 rounded-sm shadow-luxury border border-gold/30">
-              <span className="block text-2xl font-serif gold-gradient-text">Est.</span>
-              <span className="text-3xl font-serif">2019</span>
-            </div>
+          <div className="border border-gold/40 p-2.5 bg-off-white shadow-luxury block w-full">
+            <img
+              src="https://images.pexels.com/photos/16151060/pexels-photo-16151060.jpeg?auto=compress&cs=tinysrgb&w=1000&q=80"
+              alt="Velora's serene, warmly lit aesthetic treatment room with modern premium interior"
+              loading="lazy"
+              className="w-full h-[26rem] md:h-[32rem] lg:h-[38rem] object-cover"
+            />
           </div>
 
           <div>
