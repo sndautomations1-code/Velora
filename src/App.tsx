@@ -498,26 +498,58 @@ const team = [
   {
     name: 'Dr. Sophia Chen',
     title: 'Medical Director',
-    bio: 'Board-certified dermatologist with over 15 years specializing in aesthetic medicine.',
-    image: 'https://images.pexels.com/photos/5452292/pexels-photo-5452292.jpeg?auto=compress&cs=tinysrgb&w=400&q=80',
+    bio: 'A leader in aesthetic dermatology, Dr. Chen blends clinical rigor with an artist’s eye to deliver results that look effortlessly natural.',
+    image: 'https://images.pexels.com/photos/32254667/pexels-photo-32254667.jpeg?auto=compress&cs=tinysrgb&w=500&q=80',
+    alt: 'Portrait of Dr. Sophia Chen, a confident female doctor in a white coat',
+    tags: ['Board-Certified Dermatologist', '15+ Years Experience'],
   },
   {
     name: 'Marissa Delacroix',
     title: 'Lead Aesthetician',
-    bio: 'Master aesthetician certified in advanced laser therapies and skin rejuvenation.',
-    image: 'https://images.pexels.com/photos/5672401/pexels-photo-5672401.jpeg?auto=compress&cs=tinysrgb&w=400&q=80',
+    bio: 'Marissa is renowned for her advanced laser artistry and bespoke skin protocols that restore radiance and confidence.',
+    image: 'https://images.pexels.com/photos/7904457/pexels-photo-7904457.jpeg?auto=compress&cs=tinysrgb&w=500&q=80',
+    alt: 'Portrait of Marissa Delacroix, a professional aesthetician in a white coat',
+    tags: ['Master Aesthetician', 'Laser & Skin Specialist'],
   },
   {
     name: 'Dr. James Morrison',
     title: 'Injection Specialist',
-    bio: 'Expert injector specializing in facial anatomy and natural-looking enhancements.',
-    image: 'https://images.pexels.com/photos/4173285/pexels-photo-4173285.jpeg?auto=compress&cs=tinysrgb&w=400&q=80',
+    bio: 'With an intimate command of facial anatomy, Dr. Morrison is celebrated for refined, undetectable injectable enhancements.',
+    image: 'https://images.pexels.com/photos/6762869/pexels-photo-6762869.jpeg?auto=compress&cs=tinysrgb&w=500&q=80',
+    alt: 'Portrait of Dr. James Morrison, a male doctor in a white coat',
+    tags: ['Master Injector', 'Facial Aesthetics Expert'],
+  },
+];
+
+const aboutStats = [
+  { primary: '2019', caption: 'Established' },
+  { primary: '10,000+', caption: 'Treatments' },
+  { primary: '15+', caption: 'Specialists' },
+  { primary: '5-Star', caption: 'Rated Care' },
+];
+
+const philosophy = [
+  {
+    icon: ShieldCheck,
+    title: 'Medical Precision',
+    desc: 'Every protocol is grounded in clinical science and the highest safety standards.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Aesthetic Artistry',
+    desc: 'We treat the face as a canvas, enhancing your features with a refined, natural touch.',
+  },
+  {
+    icon: UserCheck,
+    title: 'Personalized Care',
+    desc: 'No two faces are alike — each journey is designed entirely around you.',
   },
 ];
 
 function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section id="about" className="section-padding bg-off-white">
@@ -564,30 +596,77 @@ function About() {
             </h3>
             <p className="text-stone leading-relaxed mb-6">
               Founded in 2019, Velora emerged from a vision to create a sanctuary where advanced medical aesthetics
-              blend seamlessly with the tranquility of a luxury spa. Our founders, recognizing the gap between
-              clinical effectiveness and spa-like comfort, established Velora to offer both.
+              blend seamlessly with the tranquility of a luxury spa — closing the gap between clinical effectiveness
+              and spa-like comfort.
             </p>
-            <p className="text-stone leading-relaxed mb-6">
+            <p className="text-stone leading-relaxed mb-8">
               Today, we stand as a beacon of excellence in aesthetic medicine, having transformed thousands of
-              lives through our personalized approach to beauty. Every treatment is a collaboration between our
-              experts and you, ensuring results that enhance rather than alter your natural beauty.
+              lives through a deeply personalized approach. Every treatment is a collaboration between our experts
+              and you — enhancing, never altering, your natural beauty.
             </p>
-            <p className="text-stone leading-relaxed">
-              Our commitment to safety, artistry, and individualized care has made us the trusted choice for
-              discerning clients seeking the highest standard in aesthetic treatments.
-            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 border-t border-gold/25 pt-8">
+              {aboutStats.map((stat) => (
+                <div
+                  key={stat.caption}
+                  className="px-1 sm:px-4 sm:border-l sm:border-gold/20 first:pl-1 sm:first:border-0 sm:first:pl-0"
+                >
+                  <div className="font-serif text-3xl gold-gradient-text leading-none">{stat.primary}</div>
+                  <div className="text-[11px] uppercase tracking-ultrawide text-stone mt-2">{stat.caption}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
-        <div className="mt-24">
-          <motion.h3
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
+          className="mt-8 mb-24"
+        >
+          <div className="text-center mb-12">
+            <p className="section-eyebrow">Why Velora</p>
+            <h3 className="font-serif text-2xl md:text-3xl text-charcoal mt-2 font-normal">
+              Our <em className="italic gold-gradient-text">Philosophy</em>
+            </h3>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {philosophy.map((value, index) => (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, y: 24 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.1 + index * 0.1 }}
+                className="text-center px-4"
+              >
+                <div className="w-14 h-14 mx-auto mb-5 rounded-full border border-gold/40 flex items-center justify-center bg-off-white shadow-luxury">
+                  <value.icon size={22} strokeWidth={1.5} className="text-gold" />
+                </div>
+                <h4 className="font-serif text-xl text-charcoal mb-3">{value.title}</h4>
+                <span className="block w-8 h-px bg-gold-gradient mx-auto mb-3" />
+                <p className="text-stone text-sm leading-relaxed">{value.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <div className="mt-8 border-t border-gold/15 pt-20">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="font-serif text-2xl text-charcoal mb-12 text-center font-normal"
+            transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
+            className="text-center mb-14"
           >
-            Meet <em className="italic gold-gradient-text">Our Team</em>
-          </motion.h3>
+            <p className="section-eyebrow">The Specialists</p>
+            <h3 className="font-serif text-3xl md:text-4xl text-charcoal mt-2 mb-5 font-normal">
+              Meet <em className="italic gold-gradient-text">Our Team</em>
+            </h3>
+            <p className="text-stone font-light max-w-2xl mx-auto">
+              Behind every Velora result is a team of board-certified physicians and master aestheticians —
+              chosen for their expertise, artistry, and genuine devotion to your care.
+            </p>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {team.map((member, index) => (
@@ -595,19 +674,35 @@ function About() {
                 key={member.name}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="card-luxury text-center p-6"
+                transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : 0.15 + index * 0.1 }}
+                className="card-luxury group cursor-default text-center p-8"
               >
-                <div className="w-32 h-32 mx-auto mb-5 rounded-full overflow-hidden border-2 border-gold/40">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="relative w-32 h-32 mx-auto mb-6">
+                  <div className="absolute inset-0 rounded-full bg-gold-gradient" />
+                  <div className="absolute inset-[3px] rounded-full overflow-hidden bg-off-white">
+                    <img
+                      src={member.image}
+                      alt={member.alt}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                    />
+                  </div>
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 gold-gradient-text text-sm bg-off-white px-2">&#10038;</span>
                 </div>
                 <h4 className="font-serif text-xl text-charcoal mb-1">{member.name}</h4>
-                <p className="text-gold text-sm tracking-wide uppercase mb-3">{member.title}</p>
-                <p className="text-stone text-sm leading-relaxed">{member.bio}</p>
+                <p className="text-gold text-xs tracking-ultrawide uppercase font-semibold mb-4">{member.title}</p>
+                <span className="block w-8 h-px bg-gold-gradient mx-auto mb-4" />
+                <p className="text-stone text-sm leading-relaxed mb-5">{member.bio}</p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {member.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-block text-[11px] tracking-wide text-charcoal/75 border border-gold/35 rounded-full py-1 px-3 bg-off-white"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
