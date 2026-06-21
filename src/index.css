@@ -50,8 +50,12 @@
     @apply px-6 md:px-12 lg:px-16;
   }
 
+  .section-eyebrow {
+    @apply inline-block text-xs uppercase tracking-ultrawide font-semibold gold-gradient-text;
+  }
+
   .btn-outline-gold {
-    @apply px-8 py-3.5 border-2 border-gold-deep text-gold-deep uppercase tracking-ultrawide text-sm font-sans font-normal transition-all duration-300 hover:bg-gold-deep hover:text-off-white;
+    @apply px-8 py-3.5 border-2 border-gold text-gold uppercase tracking-ultrawide text-sm font-sans font-normal transition-all duration-300 hover:bg-gold hover:text-off-white;
   }
 
   .btn-solid-charcoal {
@@ -98,17 +102,21 @@
   @media (prefers-reduced-motion: reduce) {
     .nav-link,
     .nav-link::after,
-    .btn-gold-cta {
+    .btn-gold-cta,
+    .card-luxury {
       transition: none !important;
     }
 
-    .btn-gold-cta:hover {
+    .btn-gold-cta:hover,
+    .card-luxury:hover {
       transform: none;
     }
   }
 
   .card-luxury {
-    @apply bg-off-white border border-gold-deep/20 rounded-sm shadow-luxury transition-all duration-300 hover:shadow-luxury-lg hover:-translate-y-1;
+    @apply bg-off-white border border-gold/25 rounded-sm shadow-luxury hover:shadow-luxury-lg hover:-translate-y-1 hover:border-gold/50;
+    transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+    will-change: transform;
   }
 
   .frame-gold {
@@ -116,31 +124,31 @@
   }
 
   .divider-gold {
-    @apply flex items-center justify-center gap-3 text-gold-deep;
+    @apply flex items-center justify-center gap-3 text-gold;
   }
 
   .divider-line {
-    @apply w-12 h-px bg-gold-deep/50;
+    @apply w-12 h-px bg-gold-gradient;
   }
 
   .image-frame {
-    @apply relative before:absolute before:inset-0 before:border before:border-gold-deep/40 before:pointer-events-none before:z-10;
+    @apply relative before:absolute before:inset-0 before:border before:border-gold/40 before:pointer-events-none before:z-10;
   }
 
   .decorative-corner {
-    @apply absolute w-4 h-4 border-t border-l border-gold-deep/30;
+    @apply absolute w-5 h-5 border-t-2 border-l-2 border-gold/50;
   }
 
   .decorative-corner-tr {
-    @apply absolute top-0 right-0 w-4 h-4 border-t border-r border-gold-deep/30;
+    @apply absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-gold/50;
   }
 
   .decorative-corner-bl {
-    @apply absolute bottom-0 left-0 w-4 h-4 border-b border-l border-gold-deep/30;
+    @apply absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-gold/50;
   }
 
   .decorative-corner-br {
-    @apply absolute bottom-0 right-0 w-4 h-4 border-b border-r border-gold-deep/30;
+    @apply absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-gold/50;
   }
 }
 

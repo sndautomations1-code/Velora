@@ -43,7 +43,7 @@ function Navbar() {
   ];
 
   const linkColorClass = isScrolled
-    ? 'text-charcoal/80 hover:text-gold-deep'
+    ? 'text-charcoal/80 hover:text-gold'
     : 'text-white hover:text-gold-light hero-text-shadow';
 
   const logoColorClass = isScrolled ? 'text-charcoal' : 'text-white hero-text-shadow';
@@ -60,7 +60,7 @@ function Navbar() {
             href="#home"
             className={`flex items-center gap-2 font-serif text-2xl md:text-3xl tracking-wide transition-colors ${logoColorClass}`}
           >
-            <span className="text-gold-deep text-3xl md:text-4xl">&#10038;</span> Velora
+            <span className="gold-gradient-text text-3xl md:text-4xl">&#10038;</span> Velora
           </a>
 
           <div className="hidden lg:flex items-center flex-1 justify-evenly mx-10">
@@ -95,7 +95,7 @@ function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden glass-effect border-t border-gold-deep/10"
+            className="lg:hidden glass-effect border-t border-gold/15"
           >
             <div className="container-padding py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
@@ -152,15 +152,15 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.8, ease: 'easeOut' }}
         >
-          <span className="text-gold-light text-2xl">&#10038;</span>
+          <span className="gold-gradient-text hero-text-shadow text-2xl">&#10038;</span>
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-off-white mt-4 mb-6 font-light">
-            Beauty, <em className="italic">Elevated</em>
+            Beauty, <em className="italic gold-gradient-text">Elevated</em>
           </h1>
           <GoldDivider />
           <p className="text-lg md:text-xl text-off-white/90 mt-6 mb-10 font-light tracking-wide">
             Where medical precision meets aesthetic artistry
           </p>
-          <a href="#services" className="btn-outline-gold inline-block border-off-white/50 text-off-white hover:bg-gold-deep hover:text-off-white hover:border-gold-deep">
+          <a href="#services" className="btn-outline-gold inline-block border-off-white/50 text-off-white hover:bg-gold hover:text-off-white hover:border-gold">
             Explore Treatments
           </a>
         </motion.div>
@@ -237,7 +237,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           alt={service.title}
           className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <span className="absolute top-4 right-4 text-gold-deep/80 text-sm">&#10038;</span>
+        <span className="absolute top-4 right-4 text-gold text-sm">&#10038;</span>
       </div>
       <div className="p-6">
         <h3 className="font-serif text-2xl text-charcoal mb-3">{service.title}</h3>
@@ -267,14 +267,18 @@ function Services() {
           transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-gold-deep text-xl">&#10038;</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
-            Our <em className="italic">Treatments</em>
+          <span className="gold-gradient-text text-xl">&#10038;</span>
+          <p className="section-eyebrow mt-3">What We Offer</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4 font-normal">
+            Our <em className="italic gold-gradient-text">Treatments</em>
           </h2>
           <GoldDivider />
+          <p className="text-stone font-light max-w-xl mx-auto mt-6">
+            Every treatment is tailored to your unique features, performed by board-certified specialists using the latest medical-grade technology.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {services.map((service, index) => (
             <ServiceCard key={service.title} service={service} index={index} />
           ))}
@@ -318,9 +322,10 @@ function About() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-gold-deep text-xl">&#10038;</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
-            About <em className="italic">Velora</em>
+          <span className="gold-gradient-text text-xl">&#10038;</span>
+          <p className="section-eyebrow mt-3">Our Story</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4 font-normal">
+            About <em className="italic gold-gradient-text">Velora</em>
           </h2>
           <GoldDivider />
         </motion.div>
@@ -340,15 +345,15 @@ function About() {
                 className="w-full h-80 md:h-96 object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-6 md:-right-10 bg-charcoal text-off-white py-4 px-6 rounded-sm shadow-luxury">
-              <span className="block text-2xl font-serif text-gold-light">Est.</span>
+            <div className="absolute -bottom-6 -right-6 md:-right-10 bg-charcoal text-off-white py-4 px-6 rounded-sm shadow-luxury border border-gold/30">
+              <span className="block text-2xl font-serif gold-gradient-text">Est.</span>
               <span className="text-3xl font-serif">2019</span>
             </div>
           </div>
 
           <div>
-            <h3 className="font-serif text-3xl text-charcoal mb-6 font-light">
-              Where Science Meets <em className="italic">Beauty</em>
+            <h3 className="font-serif text-3xl text-charcoal mb-6 font-normal">
+              Where Science Meets <em className="italic gold-gradient-text">Beauty</em>
             </h3>
             <p className="text-stone leading-relaxed mb-6">
               Founded in 2019, Velora emerged from a vision to create a sanctuary where advanced medical aesthetics
@@ -372,9 +377,9 @@ function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="font-serif text-2xl text-charcoal mb-12 text-center font-light"
+            className="font-serif text-2xl text-charcoal mb-12 text-center font-normal"
           >
-            Meet <em className="italic">Our Team</em>
+            Meet <em className="italic gold-gradient-text">Our Team</em>
           </motion.h3>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -386,7 +391,7 @@ function About() {
                 transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                 className="card-luxury text-center p-6"
               >
-                <div className="w-32 h-32 mx-auto mb-5 rounded-full overflow-hidden border-2 border-gold-deep/30">
+                <div className="w-32 h-32 mx-auto mb-5 rounded-full overflow-hidden border-2 border-gold/40">
                   <img
                     src={member.image}
                     alt={member.name}
@@ -394,7 +399,7 @@ function About() {
                   />
                 </div>
                 <h4 className="font-serif text-xl text-charcoal mb-1">{member.name}</h4>
-                <p className="text-gold-deep text-sm tracking-wide uppercase mb-3">{member.title}</p>
+                <p className="text-gold text-sm tracking-wide uppercase mb-3">{member.title}</p>
                 <p className="text-stone text-sm leading-relaxed">{member.bio}</p>
               </motion.div>
             ))}
@@ -437,7 +442,7 @@ function Process() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="process" className="section-padding bg-cream relative overflow-hidden">
+    <section id="process" className="section-padding bg-champagne relative overflow-hidden">
       <div className="max-w-7xl mx-auto container-padding">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -445,15 +450,16 @@ function Process() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-gold-deep text-xl">&#10038;</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
-            Your <em className="italic">Journey</em>
+          <span className="gold-gradient-text text-xl">&#10038;</span>
+          <p className="section-eyebrow mt-3">How It Works</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4 font-normal">
+            Your <em className="italic gold-gradient-text">Journey</em>
           </h2>
           <GoldDivider />
         </motion.div>
 
         <div ref={ref} className="relative">
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-gold-deep/30 -translate-y-1/2" />
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-gold-gradient -translate-y-1/2" />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 relative z-10">
             {steps.map((step, index) => (
@@ -465,11 +471,11 @@ function Process() {
                 className="text-center"
               >
                 <div className="relative inline-block mb-6">
-                  <span className="font-serif text-7xl text-gold-deep/20 absolute -top-2 -left-4">
+                  <span className="font-serif text-7xl text-gold/25 absolute -top-2 -left-4">
                     {step.num}
                   </span>
-                  <div className="w-20 h-20 rounded-full border border-gold-deep/40 flex items-center justify-center bg-cream relative z-10">
-                    <span className="text-gold-deep text-2xl font-serif">{step.icon}</span>
+                  <div className="w-20 h-20 rounded-full border border-gold/50 flex items-center justify-center bg-champagne relative z-10 shadow-luxury">
+                    <span className="text-gold text-2xl font-serif">{step.icon}</span>
                   </div>
                 </div>
                 <h3 className="font-serif text-xl text-charcoal mb-3">{step.title}</h3>
@@ -532,9 +538,10 @@ function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-gold-deep text-xl">&#10038;</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
-            Client <em className="italic">Stories</em>
+          <span className="gold-gradient-text text-xl">&#10038;</span>
+          <p className="section-eyebrow mt-3">Testimonials</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4 font-normal">
+            Client <em className="italic gold-gradient-text">Stories</em>
           </h2>
           <GoldDivider />
         </motion.div>
@@ -556,7 +563,7 @@ function Testimonials() {
 
               <div className="flex justify-center gap-1 mb-6">
                 {Array.from({ length: testimonials[current].stars }).map((_, i) => (
-                  <Star key={i} size={18} className="text-gold-deep fill-gold-deep" />
+                  <Star key={i} size={18} className="text-gold fill-gold" />
                 ))}
               </div>
 
@@ -567,21 +574,21 @@ function Testimonials() {
               <div className="divider-line mb-6 w-16 mx-auto" />
 
               <p className="text-charcoal font-medium">{testimonials[current].name}</p>
-              <p className="text-gold-deep text-sm tracking-wide">{testimonials[current].detail}</p>
+              <p className="text-gold text-sm tracking-wide">{testimonials[current].detail}</p>
             </motion.div>
           </AnimatePresence>
 
           <div className="flex justify-center gap-4 mt-8">
             <button
               onClick={prev}
-              className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-deep hover:bg-gold-deep hover:text-off-white transition-colors"
+              className="w-10 h-10 border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors"
               aria-label="Previous testimonial"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={next}
-              className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-deep hover:bg-gold-deep hover:text-off-white transition-colors"
+              className="w-10 h-10 border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors"
               aria-label="Next testimonial"
             >
               <ChevronRight size={20} />
@@ -594,7 +601,7 @@ function Testimonials() {
                 key={i}
                 onClick={() => setCurrent(i)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  i === current ? 'bg-gold-deep w-8' : 'bg-gold-deep/30'
+                  i === current ? 'bg-gold w-8' : 'bg-gold/30'
                 }`}
                 aria-label={`Go to testimonial ${i + 1}`}
               />
@@ -637,9 +644,10 @@ function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-gold-deep text-xl">&#10038;</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-3 mb-4 font-light">
-            Book Your <em className="italic">Visit</em>
+          <span className="gold-gradient-text text-xl">&#10038;</span>
+          <p className="section-eyebrow mt-3">Get In Touch</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4 font-normal">
+            Book Your <em className="italic gold-gradient-text">Visit</em>
           </h2>
           <GoldDivider />
         </motion.div>
@@ -664,7 +672,7 @@ function Contact() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-12"
                 >
-                  <span className="text-gold-deep text-4xl block mb-4">&#10038;</span>
+                  <span className="gold-gradient-text text-4xl block mb-4">&#10038;</span>
                   <p className="font-serif text-xl text-charcoal">Thank you!</p>
                   <p className="text-stone mt-2">We'll contact you shortly to confirm.</p>
                 </motion.div>
@@ -678,7 +686,7 @@ function Contact() {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                      className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
                     />
                   </div>
                   <div>
@@ -689,7 +697,7 @@ function Contact() {
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                      className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
                     />
                   </div>
                   <div>
@@ -699,7 +707,7 @@ function Contact() {
                       required
                       value={formData.treatment}
                       onChange={(e) => setFormData({ ...formData, treatment: e.target.value })}
-                      className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                      className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
                     >
                       <option value="">Select a treatment</option>
                       {services.map((s) => (
@@ -716,7 +724,7 @@ function Contact() {
                         required
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                        className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
                       />
                     </div>
                     <div>
@@ -726,7 +734,7 @@ function Contact() {
                         required
                         value={formData.time}
                         onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                        className="w-full px-4 py-3 border border-gold-deep/30 bg-off-white focus:border-gold-deep focus:outline-none transition-colors text-charcoal"
+                        className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
                       >
                         <option value="">Select time</option>
                         <option value="09:00">9:00 AM</option>
@@ -756,7 +764,7 @@ function Contact() {
           >
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
                   <MapPin size={24} strokeWidth={1.5} />
                 </div>
                 <div>
@@ -767,7 +775,7 @@ function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
                   <Phone size={24} strokeWidth={1.5} />
                 </div>
                 <div>
@@ -777,7 +785,7 @@ function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
                 <div>
@@ -787,7 +795,7 @@ function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold-deep shrink-0">
+                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
                   <Clock size={24} strokeWidth={1.5} />
                 </div>
                 <div>
@@ -812,7 +820,7 @@ function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div>
             <a href="#home" className="font-serif text-xl text-off-white inline-flex items-center gap-2">
-              <span className="text-gold-light">&#10038;</span> Velora
+              <span className="gold-gradient-text">&#10038;</span> Velora
             </a>
             <p className="text-stone mt-4 text-sm leading-relaxed">
               Where medical precision meets aesthetic artistry. Transforming beauty with science and care since 2019.
@@ -851,17 +859,17 @@ function Footer() {
           <div>
             <h4 className="text-off-white font-medium mb-4">Connect</h4>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-light hover:bg-gold-deep hover:text-charcoal transition-colors" aria-label="Instagram">
+              <a href="#" className="w-10 h-10 border border-gold/30 flex items-center justify-center text-gold-light hover:bg-gold hover:text-charcoal transition-colors" aria-label="Instagram">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
               </a>
-              <a href="#" className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-light hover:bg-gold-deep hover:text-charcoal transition-colors" aria-label="Facebook">
+              <a href="#" className="w-10 h-10 border border-gold/30 flex items-center justify-center text-gold-light hover:bg-gold hover:text-charcoal transition-colors" aria-label="Facebook">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
-              <a href="#" className="w-10 h-10 border border-gold-deep/30 flex items-center justify-center text-gold-light hover:bg-gold-deep hover:text-charcoal transition-colors" aria-label="LinkedIn">
+              <a href="#" className="w-10 h-10 border border-gold/30 flex items-center justify-center text-gold-light hover:bg-gold hover:text-charcoal transition-colors" aria-label="LinkedIn">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
