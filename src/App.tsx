@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star } from 'lucide-react';
 import heroImage from './assets/hero.png';
 
@@ -124,22 +124,33 @@ function Navbar() {
 }
 
 function Hero() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center">
-      <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Luxury spa treatment room"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.15)_15%,rgba(0,0,0,0)_35%,rgba(0,0,0,0)_80%,#faf8f3_100%)]" />
+    <section ref={sectionRef} id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
+          className="absolute -top-[10%] left-0 right-0 h-[120%] will-change-transform"
+        >
+          <img
+            src={heroImage}
+            alt="Luxury spa treatment room"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)_22%,rgba(0,0,0,0)_88%,#faf8f3_100%)]" />
+        <div className="absolute bottom-0 left-0 right-0 h-20 md:h-28 bg-gradient-to-b from-transparent to-cream" />
       </div>
 
       <div className="relative z-10 text-center container-padding max-w-4xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.8, ease: 'easeOut' }}
         >
           <span className="text-gold-light text-2xl">&#10038;</span>
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-off-white mt-4 mb-6 font-light">
@@ -153,10 +164,6 @@ function Hero() {
             Explore Treatments
           </a>
         </motion.div>
-      </div>
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gold-light/60 animate-bounce">
-        <div className="w-px h-12 bg-gold-deep/40 mx-auto" />
       </div>
     </section>
   );
@@ -210,14 +217,19 @@ const services = [
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="card-luxury group"
+      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{
+        duration: shouldReduceMotion ? 0 : 0.6,
+        delay: shouldReduceMotion ? 0 : 0.15 + index * 0.12,
+        ease: 'easeOut',
+      }}
+      className="card-luxury group will-change-transform"
     >
       <div className="relative overflow-hidden">
         <img
@@ -243,15 +255,16 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 function Services() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="services" className="section-padding bg-cream">
+    <section id="services" className="pt-8 md:pt-12 pb-20 md:pb-28 lg:pb-32 bg-cream">
       <div className="max-w-7xl mx-auto container-padding">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
           className="text-center mb-16"
         >
           <span className="text-gold-deep text-xl">&#10038;</span>
