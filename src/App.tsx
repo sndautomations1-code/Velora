@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight } from 'lucide-react';
 import heroImage from './assets/hero.png';
 
 const fadeInUp = {
@@ -169,52 +169,136 @@ function Hero() {
   );
 }
 
-const services = [
+type Service = {
+  num: string;
+  title: string;
+  tagline?: string;
+  desc: string;
+  duration: string;
+  price: string;
+  image: string;
+  alt: string;
+};
+
+const services: Service[] = [
   {
-    title: 'Botox',
-    desc: 'Smooth fine lines and wrinkles with precision-administered neurotoxin treatments for a refreshed, youthful appearance.',
-    duration: '30 min',
-    price: 'From $350',
-    image: 'https://images.pexels.com/photos/3757947/pexels-photo-3757947.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
-  },
-  {
-    title: 'Dermal Fillers',
-    desc: 'Restore volume and contour with premium hyaluronic acid fillers for natural-looking enhancement.',
-    duration: '45 min',
-    price: 'From $600',
-    image: 'https://images.pexels.com/photos/3997991/pexels-photo-3997991.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
-  },
-  {
-    title: 'Microneedling',
-    desc: 'Stimulate collagen production with advanced microneedling for smoother, firmer skin texture.',
-    duration: '60 min',
-    price: 'From $400',
-    image: 'https://images.pexels.com/photos/3899577/pexels-photo-3899577.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
-  },
-  {
-    title: 'Laser Resurfacing',
-    desc: 'Rejuvenate your skin with state-of-the-art fractional laser technology for dramatic results.',
-    duration: '90 min',
-    price: 'From $800',
-    image: 'https://images.pexels.com/photos/7754951/pexels-photo-7754951.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
-  },
-  {
+    num: '01',
     title: 'Signature Facial',
-    desc: 'Our bespoke facial treatment combining deep cleansing, extractions, and nourishing serums.',
+    tagline: 'Most Requested',
+    desc: 'Our bespoke facial ritual unfolds over a luxurious session — deep cleansing, gentle extractions, and layered nourishing serums tailored to your skin, finishing with a luminous, deeply hydrated glow you can feel for weeks.',
     duration: '75 min',
     price: 'From $250',
-    image: 'https://images.pexels.com/photos/3757168/pexels-photo-3757168.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+    image: 'https://images.pexels.com/photos/37229301/pexels-photo-37229301.jpeg?auto=compress&cs=tinysrgb&w=1000&q=80',
+    alt: 'Woman receiving a soothing luxury facial treatment at the spa',
   },
   {
+    num: '02',
+    title: 'Botox',
+    desc: 'Smooth fine lines and wrinkles with precision-administered neurotoxin treatments for a refreshed, naturally youthful expression.',
+    duration: '30 min',
+    price: 'From $350',
+    image: 'https://images.pexels.com/photos/7581590/pexels-photo-7581590.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+    alt: 'Close-up of a cosmetic forehead injection procedure',
+  },
+  {
+    num: '03',
+    title: 'Dermal Fillers',
+    desc: 'Restore volume and refine contour with premium hyaluronic acid fillers for soft, natural-looking enhancement.',
+    duration: '45 min',
+    price: 'From $600',
+    image: 'https://images.pexels.com/photos/7446681/pexels-photo-7446681.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+    alt: 'Aesthetician performing a lip filler treatment on a relaxed client',
+  },
+  {
+    num: '04',
+    title: 'Microneedling',
+    desc: 'Stimulate collagen production with advanced microneedling for smoother, firmer, more even skin texture.',
+    duration: '60 min',
+    price: 'From $400',
+    image: 'https://images.pexels.com/photos/29648626/pexels-photo-29648626.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+    alt: 'Woman receiving a professional microneedling facial treatment',
+  },
+  {
+    num: '05',
+    title: 'Laser Resurfacing',
+    desc: 'Rejuvenate your complexion with state-of-the-art fractional laser technology for visibly dramatic, lasting results.',
+    duration: '90 min',
+    price: 'From $800',
+    image: 'https://images.pexels.com/photos/3985356/pexels-photo-3985356.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
+    alt: 'Cosmetologist performing a laser resurfacing treatment on a client wearing safety glasses',
+  },
+  {
+    num: '06',
     title: 'Skin Rejuvenation',
-    desc: 'Advanced IPL and LED therapies to target pigmentation, redness, and overall skin vitality.',
+    desc: 'Advanced IPL and LED therapies target pigmentation, redness, and dullness to restore radiant, vital skin.',
     duration: '60 min',
     price: 'From $300',
-    image: 'https://images.pexels.com/photos/3757943/pexels-photo-3757943.jpeg?auto=compress&cs=tinysrgb&w=800&q=80',
+    image: 'https://images.pexels.com/photos/3762756/pexels-photo-3762756.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
+    alt: 'Woman with radiant, glowing rejuvenated skin',
   },
 ];
 
-function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+function BookLink({ label = 'Book Consultation' }: { label?: string }) {
+  return (
+    <a
+      href="#contact"
+      className="group/link mt-auto inline-flex items-center gap-2 text-sm uppercase tracking-ultrawide font-medium text-gold hover:text-gold-deep transition-colors"
+    >
+      {label}
+      <ArrowRight
+        size={15}
+        className="transition-transform duration-300 will-change-transform group-hover/link:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover/link:translate-x-0"
+      />
+    </a>
+  );
+}
+
+function FeaturedServiceCard({ service }: { service: typeof services[0] }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: 'easeOut' }}
+      className="card-luxury group cursor-pointer overflow-hidden flex flex-col lg:flex-row will-change-transform"
+    >
+      <div className="relative lg:w-1/2 overflow-hidden">
+        <img
+          src={service.image}
+          alt={service.alt}
+          loading="lazy"
+          className="w-full h-72 sm:h-80 lg:h-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        />
+        <span className="absolute top-5 left-5 inline-flex items-center gap-2 bg-charcoal/90 text-off-white text-xs uppercase tracking-ultrawide font-medium py-2 px-4 rounded-sm border border-gold/40">
+          <span className="gold-gradient-text">&#10038;</span> {service.tagline}
+        </span>
+      </div>
+
+      <div className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+        <div className="flex items-center gap-4 mb-4">
+          <span className="gold-gradient-text font-serif text-3xl leading-none">{service.num}</span>
+          <span className="h-px flex-1 bg-gold-gradient" />
+        </div>
+        <h3 className="font-serif text-3xl md:text-4xl text-charcoal mb-4">{service.title}</h3>
+        <p className="text-stone font-light leading-relaxed mb-8 max-w-md">{service.desc}</p>
+        <div className="flex items-center gap-6 text-sm mb-8">
+          <span className="inline-flex items-center gap-2 text-stone">
+            <Clock size={16} className="text-gold" /> {service.duration}
+          </span>
+          <span className="w-px h-4 bg-gold/40" />
+          <span className="font-medium text-charcoal">{service.price}</span>
+        </div>
+        <BookLink label="Book This Treatment" />
+      </div>
+    </motion.div>
+  );
+}
+
+function ServiceCard({ service, index, wide = false }: { service: typeof services[0]; index: number; wide?: boolean }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
   const shouldReduceMotion = useReducedMotion();
@@ -226,27 +310,36 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{
         duration: shouldReduceMotion ? 0 : 0.6,
-        delay: shouldReduceMotion ? 0 : 0.15 + index * 0.12,
+        delay: shouldReduceMotion ? 0 : 0.1 + index * 0.1,
         ease: 'easeOut',
       }}
-      className="card-luxury group will-change-transform"
+      className="card-luxury group cursor-pointer flex flex-col overflow-hidden will-change-transform"
     >
       <div className="relative overflow-hidden">
         <img
           src={service.image}
-          alt={service.title}
-          className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+          alt={service.alt}
+          loading="lazy"
+          className={`w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 ${
+            wide ? 'h-64 lg:h-72' : 'h-56'
+          }`}
         />
-        <span className="absolute top-4 right-4 text-gold text-sm">&#10038;</span>
+        <span className="absolute top-4 left-4 font-serif text-2xl gold-gradient-text drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
+          {service.num}
+        </span>
+        <span className="absolute top-4 right-4 gold-gradient-text text-sm drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]">&#10038;</span>
       </div>
-      <div className="p-6">
-        <h3 className="font-serif text-2xl text-charcoal mb-3">{service.title}</h3>
-        <p className="text-stone font-light text-sm leading-relaxed mb-4">{service.desc}</p>
-        <div className="divider-line mb-4" />
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-stone">{service.duration}</span>
+      <div className="p-7 flex flex-col flex-1">
+        <h3 className="font-serif text-2xl text-charcoal mb-2">{service.title}</h3>
+        <span className="block w-10 h-px bg-gold-gradient mb-4" />
+        <p className="text-stone font-light text-sm leading-relaxed mb-5">{service.desc}</p>
+        <div className="flex items-center justify-between text-sm mb-6">
+          <span className="inline-flex items-center gap-2 text-stone">
+            <Clock size={15} className="text-gold" /> {service.duration}
+          </span>
           <span className="font-medium text-charcoal">{service.price}</span>
         </div>
+        <BookLink />
       </div>
     </motion.div>
   );
@@ -257,15 +350,19 @@ function Services() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const shouldReduceMotion = useReducedMotion();
 
+  const [featured, ...rest] = services;
+  const trio = rest.slice(0, 3);
+  const pair = rest.slice(3);
+
   return (
-    <section id="services" className="pt-8 md:pt-12 pb-20 md:pb-28 lg:pb-32 bg-cream">
+    <section id="services" className="pt-8 md:pt-12 pb-24 md:pb-32 lg:pb-40 bg-cream">
       <div className="max-w-7xl mx-auto container-padding">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 md:mb-20"
         >
           <span className="gold-gradient-text text-xl">&#10038;</span>
           <p className="section-eyebrow mt-3">What We Offer</p>
@@ -274,14 +371,24 @@ function Services() {
           </h2>
           <GoldDivider />
           <p className="text-stone font-light max-w-xl mx-auto mt-6">
-            Every treatment is tailored to your unique features, performed by board-certified specialists using the latest medical-grade technology.
+            A curated collection of medical-grade aesthetics, each tailored to your unique features and performed by board-certified specialists using the latest technology.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {services.map((service, index) => (
-            <ServiceCard key={service.title} service={service} index={index} />
-          ))}
+        <div className="space-y-8 lg:space-y-10">
+          <FeaturedServiceCard service={featured} />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {trio.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index} />
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {pair.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index} wide />
+            ))}
+          </div>
         </div>
       </div>
     </section>
