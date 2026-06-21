@@ -54,6 +54,14 @@
     @apply inline-block text-xs uppercase tracking-ultrawide font-semibold gold-gradient-text;
   }
 
+  .label-luxury {
+    @apply block text-xs uppercase tracking-wide text-charcoal/70 font-medium mb-2;
+  }
+
+  .input-luxury {
+    @apply w-full px-4 py-3 border border-gold/30 bg-off-white text-charcoal rounded-none transition-colors duration-200 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/30;
+  }
+
   .btn-outline-gold {
     @apply px-8 py-3.5 border-2 border-gold text-gold uppercase tracking-ultrawide text-sm font-sans font-normal transition-all duration-300 hover:bg-gold hover:text-off-white;
   }

@@ -987,6 +987,13 @@ function Testimonials() {
   );
 }
 
+const contactInfo = [
+  { icon: MapPin, label: 'Visit Us', lines: ['428 Madison Avenue, Suite 1200', 'New York, NY 10022'] },
+  { icon: Phone, label: 'Call Us', lines: ['(212) 555-0147'] },
+  { icon: Mail, label: 'Email Us', lines: ['hello@velora-nyc.com'] },
+  { icon: Clock, label: 'Hours', lines: ['Monday – Friday: 9am – 7pm', 'Saturday: 10am – 5pm', 'Sunday: Closed'] },
+];
+
 function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -999,6 +1006,7 @@ function Contact() {
 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const shouldReduceMotion = useReducedMotion();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1015,8 +1023,8 @@ function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
+          className="text-center mb-14"
         >
           <span className="gold-gradient-text text-xl">&#10038;</span>
           <p className="section-eyebrow mt-3">Get In Touch</p>
@@ -1024,13 +1032,16 @@ function Contact() {
             Book Your <em className="italic gold-gradient-text">Visit</em>
           </h2>
           <GoldDivider />
+          <p className="text-stone font-light max-w-xl mx-auto mt-6">
+            Your journey to refined, confident skin begins with a single conversation. We can't wait to welcome you.
+          </p>
         </motion.div>
 
-        <div ref={ref} className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div ref={ref} className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-stretch">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : 0.15 }}
           >
             <div className="card-luxury p-8 md:p-10 relative">
               <div className="decorative-corner top-4 left-4" />
@@ -1038,50 +1049,53 @@ function Contact() {
               <div className="decorative-corner-bl bottom-4 left-4" />
               <div className="decorative-corner-br bottom-4 right-4" />
 
-              <h3 className="font-serif text-2xl text-charcoal mb-6">Request an Appointment</h3>
+              <h3 className="font-serif text-2xl md:text-3xl text-charcoal mb-2">Request an Appointment</h3>
+              <p className="text-stone text-sm font-light mb-7">
+                Share a few details and our concierge team will confirm your visit within one business day.
+              </p>
 
               {isSubmitted ? (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-12"
+                  className="text-center py-16"
                 >
-                  <span className="gold-gradient-text text-4xl block mb-4">&#10038;</span>
-                  <p className="font-serif text-xl text-charcoal">Thank you!</p>
-                  <p className="text-stone mt-2">We'll contact you shortly to confirm.</p>
+                  <span className="gold-gradient-text text-5xl block mb-4">&#10038;</span>
+                  <p className="font-serif text-2xl text-charcoal">Thank you!</p>
+                  <p className="text-stone mt-2">We'll be in touch shortly to confirm your appointment.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <label htmlFor="name" className="block text-sm text-charcoal mb-2">Full Name</label>
+                    <label htmlFor="name" className="label-luxury">Full Name</label>
                     <input
                       type="text"
                       id="name"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
+                      className="input-luxury"
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm text-charcoal mb-2">Phone Number</label>
+                    <label htmlFor="phone" className="label-luxury">Phone Number</label>
                     <input
                       type="tel"
                       id="phone"
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
+                      className="input-luxury"
                     />
                   </div>
                   <div>
-                    <label htmlFor="treatment" className="block text-sm text-charcoal mb-2">Treatment</label>
+                    <label htmlFor="treatment" className="label-luxury">Treatment of Interest</label>
                     <select
                       id="treatment"
                       required
                       value={formData.treatment}
                       onChange={(e) => setFormData({ ...formData, treatment: e.target.value })}
-                      className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
+                      className="input-luxury"
                     >
                       <option value="">Select a treatment</option>
                       {services.map((s) => (
@@ -1091,24 +1105,24 @@ function Contact() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="date" className="block text-sm text-charcoal mb-2">Preferred Date</label>
+                      <label htmlFor="date" className="label-luxury">Preferred Date</label>
                       <input
                         type="date"
                         id="date"
                         required
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
+                        className="input-luxury"
                       />
                     </div>
                     <div>
-                      <label htmlFor="time" className="block text-sm text-charcoal mb-2">Preferred Time</label>
+                      <label htmlFor="time" className="label-luxury">Preferred Time</label>
                       <select
                         id="time"
                         required
                         value={formData.time}
                         onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                        className="w-full px-4 py-3 border border-gold/30 bg-off-white focus:border-gold focus:outline-none transition-colors text-charcoal"
+                        className="input-luxury"
                       >
                         <option value="">Select time</option>
                         <option value="09:00">9:00 AM</option>
@@ -1122,7 +1136,7 @@ function Contact() {
                       </select>
                     </div>
                   </div>
-                  <button type="submit" className="btn-solid-charcoal w-full mt-4">
+                  <button type="submit" className="btn-gold-cta w-full mt-4 cursor-pointer">
                     Request Appointment
                   </button>
                 </form>
@@ -1131,53 +1145,65 @@ function Contact() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col justify-center"
+            transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : 0.25 }}
+            className="flex flex-col gap-8"
           >
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
-                  <MapPin size={24} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h4 className="text-charcoal font-medium mb-1">Visit Us</h4>
-                  <p className="text-stone">428 Madison Avenue, Suite 1200</p>
-                  <p className="text-stone">New York, NY 10022</p>
-                </div>
+            <div className="border border-gold/40 p-2 bg-off-white shadow-luxury">
+              <img
+                src="https://images.pexels.com/photos/33812025/pexels-photo-33812025.jpeg?auto=compress&cs=tinysrgb&w=900&q=80"
+                alt="The warm, inviting reception of Velora's Madison Avenue clinic"
+                loading="lazy"
+                className="w-full h-52 md:h-60 object-cover"
+              />
+            </div>
+
+            <div className="card-luxury p-8 md:p-9 flex flex-col gap-6">
+              {contactInfo.map((info) => {
+                const Icon = info.icon;
+                return (
+                  <div key={info.label} className="flex items-start gap-4">
+                    <div className="w-11 h-11 rounded-full border border-gold/40 bg-off-white shadow-luxury flex items-center justify-center text-gold shrink-0">
+                      <Icon size={18} strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h4 className="text-charcoal font-medium mb-0.5">{info.label}</h4>
+                      {info.lines.map((line) => (
+                        <p key={line} className="text-stone text-sm leading-relaxed">{line}</p>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+
+              <div className="border-t border-gold/25 pt-6 flex items-center gap-2.5">
+                <Check size={16} strokeWidth={2.5} className="text-gold shrink-0" />
+                <span className="text-sm text-charcoal/80">
+                  Same-week appointments &amp; a complimentary first consultation
+                </span>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
-                  <Phone size={24} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h4 className="text-charcoal font-medium mb-1">Call Us</h4>
-                  <p className="text-stone">(212) 555-0147</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
-                  <Mail size={24} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h4 className="text-charcoal font-medium mb-1">Email Us</h4>
-                  <p className="text-stone">hello@velora-nyc.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center text-gold shrink-0">
-                  <Clock size={24} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h4 className="text-charcoal font-medium mb-1">Hours</h4>
-                  <p className="text-stone">Monday – Friday: 9am – 7pm</p>
-                  <p className="text-stone">Saturday: 10am – 5pm</p>
-                  <p className="text-stone">Sunday: Closed</p>
-                </div>
+              <div className="flex items-center gap-3">
+                <span className="text-[11px] uppercase tracking-ultrawide text-stone mr-1">Follow</span>
+                <a
+                  href="#"
+                  aria-label="Velora on Instagram"
+                  className="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  aria-label="Velora on Facebook"
+                  className="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                </a>
               </div>
             </div>
           </motion.div>
