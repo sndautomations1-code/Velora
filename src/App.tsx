@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star } from 'lucide-react';
+import heroImage from './assets/hero.png';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -117,7 +118,7 @@ function Hero() {
     <section id="home" className="relative min-h-screen flex items-center justify-center">
       <div className="absolute inset-0">
         <img
-          src="https://images.pexels.com/photos/3757953/pexels-photo-3757953.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+          src={heroImage}
           alt="Luxury spa treatment room"
           className="w-full h-full object-cover"
         />
