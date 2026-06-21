@@ -180,6 +180,7 @@ type Service = {
   alt: string;
   highlights?: string[];
   bestFor?: string;
+  benefits?: string[];
 };
 
 const services: Service[] = [
@@ -199,6 +200,7 @@ const services: Service[] = [
       'Luminous, deeply hydrated finish',
     ],
     bestFor: 'Dull, dehydrated, or stressed skin',
+    benefits: ['Visible glow', 'Zero downtime', 'Results last weeks'],
   },
   {
     num: '02',
@@ -287,7 +289,7 @@ function FeaturedServiceCard({ service }: { service: typeof services[0] }) {
         </span>
       </div>
 
-      <div className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+      <div className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-off-white to-champagne/50 lg:border-l lg:border-gold/20">
         <div className="flex items-center gap-4 mb-4">
           <span className="gold-gradient-text font-serif text-3xl leading-none">{service.num}</span>
           <span className="h-px flex-1 bg-gold-gradient" />
@@ -317,14 +319,35 @@ function FeaturedServiceCard({ service }: { service: typeof services[0] }) {
         )}
 
         {service.bestFor && (
-          <p className="text-sm text-stone mb-8">
+          <p className="text-sm text-stone mb-5">
             <span className="gold-gradient-text font-medium uppercase tracking-wide text-xs">Best for</span>
             <span className="mx-2 text-gold/50">—</span>
             {service.bestFor}
           </p>
         )}
 
-        <BookLink label="Book This Treatment" />
+        {service.benefits && (
+          <div className="flex flex-wrap gap-2 mb-5">
+            {service.benefits.map((b) => (
+              <span
+                key={b}
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-charcoal/80 border border-gold/35 rounded-full py-1.5 px-3 bg-off-white/70"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-gold-gradient" />
+                {b}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="flex items-center gap-2.5 text-sm text-stone mb-6">
+          <ShieldCheck size={16} strokeWidth={1.75} className="text-gold shrink-0" />
+          <span>Performed by our board-certified aesthetic specialists</span>
+        </div>
+
+        <div className="border-t border-gold/25 pt-6">
+          <BookLink label="Book This Treatment" />
+        </div>
       </div>
     </motion.div>
   );
