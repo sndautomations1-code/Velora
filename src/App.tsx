@@ -43,7 +43,7 @@ function Navbar() {
   ];
 
   const linkColorClass = isScrolled
-    ? 'text-charcoal/80 hover:text-charcoal'
+    ? 'text-charcoal/80 hover:text-gold-deep'
     : 'text-white hover:text-gold-light hero-text-shadow';
 
   const logoColorClass = isScrolled ? 'text-charcoal' : 'text-white hero-text-shadow';
@@ -68,7 +68,7 @@ function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm tracking-wide transition-colors ${linkColorClass}`}
+                className={`nav-link text-sm tracking-wide ${linkColorClass}`}
               >
                 {link.name}
               </a>
