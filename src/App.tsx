@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck, Check } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck, Check, ClipboardList, FileText, HandHeart, CheckCircle2 } from 'lucide-react';
 import heroImage from './assets/hero.png';
 
 const fadeInUp = {
@@ -711,31 +711,32 @@ const steps = [
     num: '01',
     title: 'Consultation',
     desc: 'Begin with a comprehensive assessment where we discuss your goals, analyze your skin, and create a personalized treatment roadmap.',
-    icon: 'S',
+    icon: ClipboardList,
   },
   {
     num: '02',
     title: 'Custom Plan',
     desc: 'Receive a tailored treatment plan designed specifically for your unique needs, timeline, and desired outcomes.',
-    icon: 'P',
+    icon: FileText,
   },
   {
     num: '03',
     title: 'Treatment',
     desc: 'Experience your treatment in our serene, state-of-the-art facility administered by our expert practitioners.',
-    icon: 'T',
+    icon: HandHeart,
   },
   {
     num: '04',
     title: 'Aftercare',
     desc: 'Enjoy dedicated follow-up care with personalized instructions and ongoing support for optimal, lasting results.',
-    icon: 'A',
+    icon: CheckCircle2,
   },
 ];
 
 function Process() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section id="process" className="section-padding bg-champagne relative overflow-hidden">
@@ -743,8 +744,8 @@ function Process() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
+          className="text-center mb-16 md:mb-20"
         >
           <span className="gold-gradient-text text-xl">&#10038;</span>
           <p className="section-eyebrow mt-3">How It Works</p>
@@ -752,32 +753,42 @@ function Process() {
             Your <em className="italic gold-gradient-text">Journey</em>
           </h2>
           <GoldDivider />
+          <p className="text-stone font-light max-w-xl mx-auto mt-6">
+            Four considered steps — from first conversation to lasting results — each guided personally by your Velora specialist.
+          </p>
         </motion.div>
 
         <div ref={ref} className="relative">
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-gold-gradient -translate-y-1/2" />
+          {/* connecting timeline path, aligned to the node centers (desktop only) */}
+          <div className="hidden lg:block absolute top-[2.75rem] left-[12.5%] right-[12.5%] h-px -translate-y-1/2 bg-gradient-to-r from-gold/20 via-gold to-gold/20" />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 relative z-10">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="text-center"
-              >
-                <div className="relative inline-block mb-6">
-                  <span className="font-serif text-7xl text-gold/25 absolute -top-2 -left-4">
-                    {step.num}
-                  </span>
-                  <div className="w-20 h-20 rounded-full border border-gold/50 flex items-center justify-center bg-champagne relative z-10 shadow-luxury">
-                    <span className="text-gold text-2xl font-serif">{step.icon}</span>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-y-14 lg:gap-6">
+            {steps.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <motion.div
+                  key={step.num}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : index * 0.15 }}
+                  className="relative z-10 flex flex-col items-center text-center"
+                >
+                  <div className="relative h-[5.5rem] mb-6 flex items-center justify-center">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 font-serif text-7xl text-gold/20 leading-none select-none pointer-events-none">
+                      {step.num}
+                    </span>
+                    <div className="relative z-10 w-[5.5rem] h-[5.5rem] rounded-full border border-gold/50 bg-champagne shadow-luxury flex items-center justify-center ring-1 ring-gold/15 ring-offset-2 ring-offset-champagne">
+                      <Icon size={26} strokeWidth={1.5} className="text-gold" />
+                    </div>
                   </div>
-                </div>
-                <h3 className="font-serif text-xl text-charcoal mb-3">{step.title}</h3>
-                <p className="text-stone text-sm leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
+                  <p className="text-[11px] uppercase tracking-ultrawide gold-gradient-text font-semibold mb-2">
+                    Step {step.num}
+                  </p>
+                  <h3 className="font-serif text-xl text-charcoal mb-3">{step.title}</h3>
+                  <p className="text-stone text-sm leading-relaxed max-w-xs">{step.desc}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
