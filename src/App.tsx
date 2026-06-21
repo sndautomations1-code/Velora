@@ -800,50 +800,112 @@ const testimonials = [
   {
     name: 'Alexandra M.',
     detail: 'Botox & Fillers',
-    quote: "Velora has transformed my entire approach to skincare. Dr. Chen's expertise is unmatched, and the results speak for themselves. I've never felt more confident.",
+    quote: "Velora completely transformed my approach to skincare. Dr. Chen's expertise is unmatched — the results look so natural that friends just say I look 'well-rested.' I've never felt more confident.",
     stars: 5,
+    image: 'https://images.pexels.com/photos/18392646/pexels-photo-18392646.jpeg?auto=compress&cs=tinysrgb&w=300&q=80',
   },
   {
     name: 'Rebecca T.',
     detail: 'Microneedling',
-    quote: "After years of struggling with acne scars, the microneedling treatments at Velora have given me skin I finally love. The team's care and professionalism made all the difference.",
+    quote: "After years of struggling with acne scars, microneedling at Velora gave me skin I finally love. The team's care and professionalism made every session feel effortless.",
     stars: 5,
+    image: 'https://images.pexels.com/photos/11033796/pexels-photo-11033796.jpeg?auto=compress&cs=tinysrgb&w=300&q=80',
   },
   {
     name: 'Jennifer L.',
     detail: 'Signature Facial',
-    quote: "Every visit to Velora feels like a true retreat. The Signature Facial is heavenly, and I always leave with a radiant glow. Simply the best spa experience I've ever had.",
+    quote: "Every visit feels like a true retreat. The Signature Facial is heavenly and I always leave with a radiant glow that lasts for weeks. Simply the best experience I've ever had.",
     stars: 5,
+    image: 'https://images.pexels.com/photos/13822593/pexels-photo-13822593.jpeg?auto=compress&cs=tinysrgb&w=300&q=80',
   },
   {
     name: 'Megan K.',
     detail: 'Laser Resurfacing',
-    quote: "The laser treatment results exceeded all my expectations. Dr. Morrison explained everything thoroughly and the aftercare was exceptional. My skin has never looked better.",
+    quote: "The laser results exceeded every expectation. Dr. Morrison explained each step thoroughly and the aftercare was exceptional. My skin has genuinely never looked better.",
     stars: 5,
+    image: 'https://images.pexels.com/photos/2764975/pexels-photo-2764975.jpeg?auto=compress&cs=tinysrgb&w=300&q=80',
+  },
+  {
+    name: 'Priya N.',
+    detail: 'Dermal Fillers',
+    quote: "I was nervous about fillers, but the team's honesty put me at ease — they enhanced what I already had instead of changing my face. The balance and subtlety are everything.",
+    stars: 5,
+    image: 'https://images.pexels.com/photos/18156213/pexels-photo-18156213.jpeg?auto=compress&cs=tinysrgb&w=300&q=80',
+  },
+  {
+    name: 'Sofia R.',
+    detail: 'Skin Rejuvenation',
+    quote: "From the moment you walk in, everything feels considered and luxurious. My pigmentation has faded dramatically and my complexion looks lit from within. I recommend Velora to everyone.",
+    stars: 5,
+    image: 'https://images.pexels.com/photos/2530364/pexels-photo-2530364.jpeg?auto=compress&cs=tinysrgb&w=300&q=80',
   },
 ];
 
+const reviewStats = [
+  { primary: '500+', caption: 'Five-Star Reviews' },
+  { primary: '98%', caption: 'Would Recommend' },
+  { primary: '4.9', caption: 'Average Rating' },
+];
+
+function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
+  return (
+    <div className="card-luxury relative h-full flex flex-col p-8 text-center cursor-default">
+      <span className="font-serif text-6xl gold-gradient-text leading-none select-none pointer-events-none mb-2">
+        &ldquo;
+      </span>
+
+      <div className="flex justify-center gap-1 mb-5">
+        {Array.from({ length: t.stars }).map((_, i) => (
+          <Star key={i} size={16} className="text-gold fill-gold" />
+        ))}
+      </div>
+
+      <blockquote className="font-serif text-lg md:text-xl text-charcoal italic leading-relaxed mb-8">
+        {t.quote}
+      </blockquote>
+
+      <div className="mt-auto">
+        <span className="block w-10 h-px bg-gold-gradient mx-auto mb-5" />
+        <div className="relative w-16 h-16 mx-auto mb-3">
+          <div className="absolute inset-0 rounded-full bg-gold-gradient" />
+          <div className="absolute inset-[2px] rounded-full overflow-hidden bg-off-white">
+            <img src={t.image} alt={`Portrait of ${t.name}`} loading="lazy" className="w-full h-full object-cover" />
+          </div>
+        </div>
+        <p className="text-charcoal font-medium">{t.name}</p>
+        <p className="text-gold text-xs tracking-ultrawide uppercase font-semibold mt-1">{t.detail}</p>
+      </div>
+    </div>
+  );
+}
+
+const PER_PAGE = 3;
+
 function Testimonials() {
-  const [current, setCurrent] = useState(0);
+  const [page, setPage] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const shouldReduceMotion = useReducedMotion();
 
-  const next = () => setCurrent((p) => (p + 1) % testimonials.length);
-  const prev = () => setCurrent((p) => (p - 1 + testimonials.length) % testimonials.length);
+  const pageCount = Math.ceil(testimonials.length / PER_PAGE);
+  const next = () => setPage((p) => (p + 1) % pageCount);
+  const prev = () => setPage((p) => (p - 1 + pageCount) % pageCount);
 
   useEffect(() => {
-    const interval = setInterval(next, 6000);
+    const interval = setInterval(() => setPage((p) => (p + 1) % pageCount), 7000);
     return () => clearInterval(interval);
-  }, []);
+  }, [pageCount]);
+
+  const visible = testimonials.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
 
   return (
     <section id="testimonials" className="section-padding bg-off-white">
-      <div className="max-w-4xl mx-auto container-padding">
+      <div className="max-w-7xl mx-auto container-padding">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
+          className="text-center mb-12"
         >
           <span className="gold-gradient-text text-xl">&#10038;</span>
           <p className="section-eyebrow mt-3">Testimonials</p>
@@ -851,68 +913,73 @@ function Testimonials() {
             Client <em className="italic gold-gradient-text">Stories</em>
           </h2>
           <GoldDivider />
+          <p className="text-stone font-light max-w-xl mx-auto mt-6">
+            Real results, in their own words — a few of the thousands of clients who have made Velora their trusted home for aesthetic care.
+          </p>
         </motion.div>
 
-        <div ref={ref} className="relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : 0.15 }}
+          className="flex flex-wrap items-center justify-center gap-x-4 gap-y-4 max-w-2xl mx-auto mb-14 border-y border-gold/25 py-6"
+        >
+          {reviewStats.map((stat, i) => (
+            <Fragment key={stat.caption}>
+              <div className="text-center px-4 sm:px-8">
+                <div className="font-serif text-3xl gold-gradient-text leading-none">{stat.primary}</div>
+                <div className="text-[11px] uppercase tracking-ultrawide text-stone mt-2">{stat.caption}</div>
+              </div>
+              {i < reviewStats.length - 1 && <span className="hidden sm:block w-px h-10 bg-gold/30" aria-hidden="true" />}
+            </Fragment>
+          ))}
+        </motion.div>
+
+        <div ref={ref}>
           <AnimatePresence mode="wait">
             <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4 }}
-              className="card-luxury p-8 md:p-12 text-center relative"
+              key={page}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -16 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.4 }}
+              className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
             >
-              <div className="decorative-corner top-4 left-4" />
-              <div className="decorative-corner-tr top-4 right-4" />
-              <div className="decorative-corner-bl bottom-4 left-4" />
-              <div className="decorative-corner-br bottom-4 right-4" />
-
-              <div className="flex justify-center gap-1 mb-6">
-                {Array.from({ length: testimonials[current].stars }).map((_, i) => (
-                  <Star key={i} size={18} className="text-gold fill-gold" />
-                ))}
-              </div>
-
-              <blockquote className="font-serif text-xl md:text-2xl text-charcoal italic leading-relaxed mb-8">
-                "{testimonials[current].quote}"
-              </blockquote>
-
-              <div className="divider-line mb-6 w-16 mx-auto" />
-
-              <p className="text-charcoal font-medium">{testimonials[current].name}</p>
-              <p className="text-gold text-sm tracking-wide">{testimonials[current].detail}</p>
+              {visible.map((t) => (
+                <TestimonialCard key={t.name} t={t} />
+              ))}
             </motion.div>
           </AnimatePresence>
 
-          <div className="flex justify-center gap-4 mt-8">
+          <div className="flex items-center justify-center gap-6 mt-12">
             <button
               onClick={prev}
-              className="w-10 h-10 border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors"
-              aria-label="Previous testimonial"
+              className="w-11 h-11 rounded-full border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
+              aria-label="Previous testimonials"
             >
               <ChevronLeft size={20} />
             </button>
+
+            <div className="flex items-center gap-2.5">
+              {Array.from({ length: pageCount }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPage(i)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    i === page ? 'bg-gold-gradient w-8' : 'bg-gold/30 w-2 hover:bg-gold/50'
+                  }`}
+                  aria-label={`Go to testimonials page ${i + 1}`}
+                />
+              ))}
+            </div>
+
             <button
               onClick={next}
-              className="w-10 h-10 border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors"
-              aria-label="Next testimonial"
+              className="w-11 h-11 rounded-full border border-gold/40 flex items-center justify-center text-gold hover:bg-gold hover:text-off-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
+              aria-label="Next testimonials"
             >
               <ChevronRight size={20} />
             </button>
-          </div>
-
-          <div className="flex justify-center gap-2 mt-6">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  i === current ? 'bg-gold w-8' : 'bg-gold/30'
-                }`}
-                aria-label={`Go to testimonial ${i + 1}`}
-              />
-            ))}
           </div>
         </div>
       </div>
