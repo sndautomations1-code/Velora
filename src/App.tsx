@@ -142,8 +142,8 @@ function Hero() {
             className="w-full h-full object-cover"
           />
         </motion.div>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)_22%,rgba(0,0,0,0)_88%,#faf8f3_100%)]" />
-        <div className="absolute bottom-0 left-0 right-0 h-20 md:h-28 bg-gradient-to-b from-transparent to-cream" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)_22%)]" />
+        <div className="absolute bottom-0 left-0 right-0 h-10 md:h-12 bg-gradient-to-b from-transparent to-cream" />
       </div>
 
       <div className="relative z-10 text-center container-padding max-w-4xl mx-auto px-6">
