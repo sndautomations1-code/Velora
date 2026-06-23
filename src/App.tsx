@@ -1193,7 +1193,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="bg-[#1a1a1a] py-16">
+    <footer className="bg-[#1a1a1a] pt-16 pb-[calc(4rem+44px)]">
       <div className="max-w-7xl mx-auto container-padding">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div>
@@ -1283,7 +1283,7 @@ function DemoBanner() {
 
 export default function App() {
   return (
-    <div className="min-h-screen pb-12">
+    <div className="min-h-screen">
       <Navbar />
       <Hero />
       <Services />
