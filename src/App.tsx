@@ -1095,7 +1095,7 @@ function Contact() {
                       required
                       value={formData.treatment}
                       onChange={(e) => setFormData({ ...formData, treatment: e.target.value })}
-                      className="input-luxury"
+                      className="input-luxury select-luxury"
                     >
                       <option value="">Select a treatment</option>
                       {services.map((s) => (
@@ -1103,7 +1103,7 @@ function Contact() {
                       ))}
                     </select>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:items-end">
                     <div>
                       <label htmlFor="date" className="label-luxury">Preferred Date</label>
                       <input
@@ -1112,7 +1112,7 @@ function Contact() {
                         required
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        className="input-luxury"
+                        className="input-luxury date-input-luxury"
                       />
                     </div>
                     <div>
@@ -1122,7 +1122,7 @@ function Contact() {
                         required
                         value={formData.time}
                         onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                        className="input-luxury"
+                        className="input-luxury select-luxury"
                       >
                         <option value="">Select time</option>
                         <option value="09:00">9:00 AM</option>

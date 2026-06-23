@@ -60,6 +60,35 @@
 
   .input-luxury {
     @apply w-full px-4 py-3 border border-gold/30 bg-off-white text-charcoal rounded-none transition-colors duration-200 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/30;
+    box-sizing: border-box;
+    height: 3.125rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .select-luxury {
+    @apply cursor-pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23dfa256' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.7rem;
+    padding-right: 2.5rem;
+  }
+
+  .date-input-luxury {
+    padding-right: 2.5rem;
+  }
+
+  .date-input-luxury::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    margin-right: -0.25rem;
+    padding: 0.3rem;
+    opacity: 0.75;
+    filter: invert(46%) sepia(50%) saturate(531%) hue-rotate(345deg) brightness(94%) contrast(91%);
   }
 
   .btn-outline-gold {
