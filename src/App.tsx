@@ -198,8 +198,19 @@ function Hero() {
           <p className="text-lg md:text-xl text-off-white/90 mt-6 mb-10 font-light tracking-wide">
             Where medical precision meets aesthetic artistry
           </p>
-          <a href="#services" className="btn-outline-gold inline-block border-off-white/50 text-off-white hover:bg-gold hover:text-off-white hover:border-gold">
-            Explore Treatments
+          <a
+            href="#services"
+            className="btn-hero-explore group inline-block px-8 py-3.5 border-2 border-off-white/50 text-off-white uppercase tracking-ultrawide text-sm font-sans font-normal hover:text-charcoal hover:border-gold"
+          >
+            <span className="relative z-10 inline-flex items-center">
+              Explore Treatments
+              <ArrowRight
+                size={16}
+                strokeWidth={2}
+                aria-hidden="true"
+                className="absolute -right-6 -translate-x-2 opacity-0 transition-all duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100"
+              />
+            </span>
           </a>
         </motion.div>
       </div>
