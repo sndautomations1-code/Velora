@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck, Check, ClipboardList, FileText, HandHeart, CheckCircle2, Instagram } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck, Check, ClipboardList, FileText, HandHeart, CheckCircle2 } from 'lucide-react';
 import heroImage from './assets/hero.png';
 
 const fadeInUp = {
@@ -46,9 +46,9 @@ function Navbar() {
 
   const useDarkHeader = isScrolled || isMobileMenuOpen;
 
-  const pillClass = useDarkHeader
-    ? 'border-charcoal/25 text-charcoal/80 hover:border-gold hover:bg-gold/10 hover:text-charcoal'
-    : 'border-white/30 text-white hover:border-gold-light/80 hover:bg-white/5 hero-text-shadow';
+  const linkColorClass = useDarkHeader
+    ? 'text-charcoal/80 hover:text-gold'
+    : 'text-white hover:text-gold-light hero-text-shadow';
 
   const logoColorClass = useDarkHeader ? 'text-charcoal' : 'text-white hero-text-shadow';
 
@@ -72,25 +72,16 @@ function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`px-4 py-1.5 rounded-md border text-sm tracking-wide transition-all duration-300 ${pillClass}`}
+                className={`nav-link text-sm tracking-wide ${linkColorClass}`}
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          <div className="hidden lg:flex items-center gap-4 shrink-0">
-            <a
-              href="#"
-              aria-label="Instagram"
-              className={`flex items-center justify-center w-9 h-9 aspect-square rounded-md border transition-all duration-300 ${pillClass}`}
-            >
-              <Instagram size={17} strokeWidth={1.75} />
-            </a>
-            <a href="#contact" className="btn-gold-cta rounded-full px-6 py-2 text-sm">
-              Book Now
-            </a>
-          </div>
+          <a href="#contact" className="hidden lg:inline-block btn-gold-cta rounded-full px-6 py-2 text-sm shrink-0">
+            Book Now
+          </a>
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
