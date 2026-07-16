@@ -18,6 +18,7 @@ export default {
       fontFamily: {
         serif: ['Cormorant Garamond', 'serif'],
         sans: ['Inter', 'sans-serif'],
+        script: ['Alex Brush', 'cursive'],
       },
       backgroundImage: {
         'gold-gradient': 'linear-gradient(135deg, #d4bf8c, #e9bf86, #dfa256)',

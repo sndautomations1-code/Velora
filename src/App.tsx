@@ -62,7 +62,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-20 md:h-24">
           <a
             href="#home"
-            className={`flex items-center gap-2 font-serif text-2xl md:text-3xl tracking-wide transition-colors ${logoColorClass}`}
+            className={`flex items-center gap-2 font-script text-3xl md:text-4xl transition-colors ${logoColorClass}`}
           >
             <span className="gold-gradient-text text-3xl md:text-4xl">&#10038;</span> Velora
           </a>
@@ -72,7 +72,7 @@ function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`px-4 py-1.5 rounded-full border text-sm tracking-wide transition-all duration-300 ${pillClass}`}
+                className={`px-4 py-1.5 rounded-md border text-sm tracking-wide transition-all duration-300 ${pillClass}`}
               >
                 {link.name}
               </a>
@@ -83,7 +83,7 @@ function Navbar() {
             <a
               href="#"
               aria-label="Instagram"
-              className={`flex items-center justify-center w-9 h-9 aspect-square rounded-full border transition-all duration-300 ${pillClass}`}
+              className={`flex items-center justify-center w-9 h-9 aspect-square rounded-md border transition-all duration-300 ${pillClass}`}
             >
               <Instagram size={17} strokeWidth={1.75} />
             </a>
