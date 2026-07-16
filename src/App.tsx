@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, Fragment } from 'react';
-import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect, useRef, Fragment, type MouseEvent as ReactMouseEvent } from 'react';
+import { motion, useInView, AnimatePresence, useReducedMotion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, ChevronLeft, ChevronRight, Menu, X, Star, ArrowRight, Sparkles, Award, ShieldCheck, UserCheck, Check, ClipboardList, FileText, HandHeart, CheckCircle2 } from 'lucide-react';
 import heroImage from './assets/hero.png';
 
@@ -22,6 +22,42 @@ function GoldDivider() {
       <span className="block w-1.5 h-1.5 rotate-45 bg-gold-gradient" />
       <span className="block h-px w-10 bg-gradient-to-l from-transparent to-gold/60" />
     </div>
+  );
+}
+
+function BookNowCta() {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 260, damping: 18 });
+  const springY = useSpring(y, { stiffness: 260, damping: 18 });
+
+  const handleMouseMove = (e: ReactMouseEvent<HTMLAnchorElement>) => {
+    if (shouldReduceMotion || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    x.set(((e.clientX - (rect.left + rect.width / 2)) / rect.width) * 8);
+    y.set(((e.clientY - (rect.top + rect.height / 2)) / rect.height) * 8);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.a
+      ref={ref}
+      href="#contact"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: springX, y: springY }}
+      whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="btn-cta-live hidden lg:inline-block rounded-full px-6 py-2 text-sm text-charcoal uppercase tracking-ultrawide font-sans font-medium shrink-0"
+    >
+      Book Now
+    </motion.a>
   );
 }
 
@@ -79,9 +115,7 @@ function Navbar() {
             ))}
           </div>
 
-          <a href="#contact" className="hidden lg:inline-block btn-gold-cta rounded-full px-6 py-2 text-sm shrink-0">
-            Book Now
-          </a>
+          <BookNowCta />
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

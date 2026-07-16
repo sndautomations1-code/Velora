@@ -215,3 +215,48 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #dfa256;
 }
+
+/* Live CTA: slow-cycling gold gradient + periodic shine sweep */
+.btn-cta-live {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(115deg, #c9a96e, #e8c896, #d4a5a0, #e8c896, #c9a96e);
+  background-size: 250% 100%;
+  animation: cta-gradient-shift 5s ease-in-out infinite;
+  box-shadow: 0 2px 10px rgba(196, 169, 110, 0.3);
+  transition: box-shadow 300ms ease;
+}
+
+.btn-cta-live:hover {
+  box-shadow: 0 8px 30px rgba(223, 162, 86, 0.55), 0 0 18px rgba(232, 200, 150, 0.45);
+}
+
+.btn-cta-live::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.4) 50%, transparent 58%);
+  transform: translateX(-100%);
+  animation: cta-shine-sweep 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cta-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes cta-shine-sweep {
+  0% { transform: translateX(-100%); }
+  45% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta-live,
+  .btn-cta-live::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
